@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import ShoppingCart from "../../../public/shoppingCart.svg";
-import Search from "../../../public/search.svg";
-import Heart from "../../../public/heart.svg";
-import Profile from "../../../public/profile.svg";
+import ShoppingCart from "../../public/shoppingCart.svg";
+import Search from "../../public/search.svg";
+import Heart from "../../public/heart.svg";
+import Profile from "../../public/profile.svg";
 
 const MenuItems = ["Home", "Shop", "About", "Contact"];
 const IconItems = [
@@ -26,7 +26,7 @@ const IconItems = [
 ];
 const Header = () => {
   return (
-    <div className="bg-gray-100 flex flex-1 flex-row px-16 py-5">
+    <div className="bg-white flex flex-1 flex-row px-16 py-5">
       <div className="flex flex-1 flex-row justify-between">
         <div>Logo</div>
         <div>

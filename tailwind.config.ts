@@ -9,9 +9,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        cream: "#fff3e3",
+        darkCream: "#b88e2f",
+      },
+      fontSize: {
+        "2xs": "10px",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
   },
