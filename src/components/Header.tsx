@@ -4,8 +4,26 @@ import ShoppingCart from "../../public/shoppingCart.svg";
 import Search from "../../public/search.svg";
 import Heart from "../../public/heart.svg";
 import Profile from "../../public/profile.svg";
+import Link from "next/link";
 
-const MenuItems = ["Home", "Shop", "About", "Contact"];
+const MenuItems = [
+  {
+    name: "Home",
+    link: "/home",
+  },
+  {
+    name: "Shop",
+    link: "#",
+  },
+  {
+    name: "About",
+    link: "#",
+  },
+  {
+    name: "Contact",
+    link: "#",
+  },
+];
 const IconItems = [
   {
     name: "ShoppingCart",
@@ -34,7 +52,7 @@ const Header = () => {
             {MenuItems.map((item, index) => {
               return (
                 <li className="inline cursor-pointer" key={index}>
-                  {item}
+                  <Link href={item.link}>{item.name}</Link>
                 </li>
               );
             })}

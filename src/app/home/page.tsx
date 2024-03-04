@@ -142,7 +142,10 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="bg-red-500 absolute  transition duration-300 top-0 w-full h-full flex flex-col justify-center items-center">
-                      <button onClick={() => sendGTMEvent({ event: "buttonClicked", value: "xyz" })} className="bg-white px-10 py-2 text-darkCream">
+                      <button
+                        onClick={() => sendGTMEvent({ event: "buttonClickedyes", value: "xyz" })}
+                        className="bg-white px-10 py-2 text-darkCream"
+                      >
                         Add to cart
                       </button>
                       <div className="mt-5 flex flex-row gap-4">
