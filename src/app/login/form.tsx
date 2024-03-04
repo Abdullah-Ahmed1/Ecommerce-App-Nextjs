@@ -3,9 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface ILoginForm {
-  handleSubmit: (
-    event: any
-  ) => Promise<{ status: number; error: string } | undefined>;
+  handleSubmit: (event: any) => Promise<void>;
 }
 const LoginForm: React.FC<ILoginForm> = ({ handleSubmit }) => {
   return (
