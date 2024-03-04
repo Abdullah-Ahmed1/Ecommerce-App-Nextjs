@@ -1,3 +1,4 @@
+"use client";
 import shopify from "@/utils/shopify";
 import { gql } from "graphql-request";
 import React, { useEffect } from "react";
@@ -5,6 +6,7 @@ import Image from "next/image";
 import Compare from "../../../public/compare.svg";
 import Share from "../../../public/share.svg";
 import Heart from "../../../public/heart.svg";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 const CategoryItems = [
   {
@@ -88,9 +90,7 @@ const Home = () => {
               dignissimos ducimus maiores ea tempore in,
               <br />
             </p>
-            <button className="bg-darkCream px-10 py-2 text-md text-white mt-5">
-              Buy Now
-            </button>
+            <button className="bg-darkCream px-10 py-2 text-md text-white mt-5">Buy Now</button>
           </div>
         </div>
       </div>
@@ -122,10 +122,7 @@ const Home = () => {
           <div className="flex flex-1 flex-wrap flex-row justify-center mt-10 gap-8 px-40">
             {ProducItems.map((item, index) => {
               return (
-                <div
-                  key={index}
-                  className="bg-gray-100 cursor-pointer relative"
-                >
+                <div key={index} className="bg-gray-100 cursor-pointer relative">
                   <>
                     <div>
                       <div className="relative w-60 h-60">
@@ -140,45 +137,25 @@ const Home = () => {
                       </div>
                       <div className="px-3 py-3 flex gap-1 flex-col">
                         <p className="font-bold text-lg">Lolito</p>
-                        <p className="font-light text-xs text-gray-500">
-                          Stylish Cafe Chair
-                        </p>
+                        <p className="font-light text-xs text-gray-500">Stylish Cafe Chair</p>
                         <p className="text-sm font-semibold">Rp 20.00.000</p>
                       </div>
                     </div>
-                    <div className="bg-red-500 absolute invisible hover:visible transition duration-300 top-0 w-full h-full flex flex-col justify-center items-center">
-                      <button className="bg-white px-10 py-2 text-darkCream">
+                    <div className="bg-red-500 absolute  transition duration-300 top-0 w-full h-full flex flex-col justify-center items-center">
+                      <button onClick={() => sendGTMEvent({ event: "buttonClicked", value: "xyz" })} className="bg-white px-10 py-2 text-darkCream">
                         Add to cart
                       </button>
                       <div className="mt-5 flex flex-row gap-4">
                         <div className="flex flex-row items-center justify-center gap-1">
-                          <Image
-                            priority
-                            src={Share}
-                            className="filter invert"
-                            width={14}
-                            alt={"Cart"}
-                          />
+                          <Image priority src={Share} className="filter invert" width={14} alt={"Cart"} />
                           <p className="text-xs text-white ">share</p>
                         </div>
                         <div className="flex flex-row items-center justify-center gap-1">
-                          <Image
-                            priority
-                            src={Compare}
-                            width={14}
-                            className="filter invert"
-                            alt={"Cart"}
-                          />
+                          <Image priority src={Compare} width={14} className="filter invert" alt={"Cart"} />
                           <p className="text-xs text-white">Compare</p>
                         </div>
                         <div className="flex flex-row items-center justify-center gap-1">
-                          <Image
-                            priority
-                            src={Heart}
-                            className="filter invert"
-                            width={14}
-                            alt={"Cart"}
-                          />
+                          <Image priority src={Heart} className="filter invert" width={14} alt={"Cart"} />
                           <p className="text-xs text-white">Heart</p>
                         </div>
                       </div>
