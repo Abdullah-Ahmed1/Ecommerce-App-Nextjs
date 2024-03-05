@@ -25,7 +25,7 @@ const CategoryItems = [
 
 const ProducItems = [
   {
-    name: "Lolito",
+    name: "Lolito 1",
     price: "200.000.000",
     discount: false,
     dicountPercent: null,
@@ -33,7 +33,7 @@ const ProducItems = [
     image: "/images/bedroom.jpeg",
   },
   {
-    name: "Lolito",
+    name: "Lolito 2",
     price: "200.000.000",
     discount: false,
     dicountPercent: null,
@@ -41,7 +41,7 @@ const ProducItems = [
     image: "/images/bedroom.jpeg",
   },
   {
-    name: "Lolito",
+    name: "Lolito 3",
     price: "200.000.000",
     discount: false,
     dicountPercent: null,
@@ -49,7 +49,7 @@ const ProducItems = [
     image: "/images/bedroom.jpeg",
   },
   {
-    name: "Lolito",
+    name: "Lolito 4",
     price: "200.000.000",
     discount: false,
     dicountPercent: null,
@@ -57,7 +57,7 @@ const ProducItems = [
     image: "/images/bedroom.jpeg",
   },
   {
-    name: "Lolito",
+    name: "Lolito 5",
     price: "200.000.000",
     discount: false,
     dicountPercent: null,
@@ -136,14 +136,15 @@ const Home = () => {
                         />
                       </div>
                       <div className="px-3 py-3 flex gap-1 flex-col">
-                        <p className="font-bold text-lg">Lolito</p>
+                        <p className="font-bold text-lg">{item.name}</p>
                         <p className="font-light text-xs text-gray-500">Stylish Cafe Chair</p>
                         <p className="text-sm font-semibold">Rp 20.00.000</p>
                       </div>
                     </div>
                     <div className="bg-red-500 absolute  transition duration-300 top-0 w-full h-full flex flex-col justify-center items-center">
                       <button
-                        onClick={() => sendGTMEvent({ event: "buttonClickedyes", value: "xyz" })}
+                        id="test1"
+                        onClick={() => sendGTMEvent({ event: "buttonClickedyes", id: "test", productName: item.name })}
                         className="bg-white px-10 py-2 text-darkCream"
                       >
                         Add to cart
