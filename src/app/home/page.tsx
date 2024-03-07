@@ -69,7 +69,7 @@ const Home = () => {
   return (
     <>
       <div className="h-screen">
-        <div className="flex flex-1 w-screen  relative h-4/5">
+        <div className="flex flex-1 relative h-4/5">
           <Image
             fill
             quality={100}
@@ -135,13 +135,16 @@ const Home = () => {
                           alt={"test"}
                         />
                       </div>
+                      {/* <div className="bg-red-500 w-12 h-12 text-white text-xs rounded-full absolute top-2 right-2 flex justify-center items-center">
+                        10%
+                      </div> */}
                       <div className="px-3 py-3 flex gap-1 flex-col">
                         <p className="font-bold text-lg">{item.name}</p>
                         <p className="font-light text-xs text-gray-500">Stylish Cafe Chair</p>
                         <p className="text-sm font-semibold">Rp 20.00.000</p>
                       </div>
                     </div>
-                    <div className="bg-red-500 absolute  transition duration-300 top-0 w-full h-full flex flex-col justify-center items-center">
+                    <div className="bg-stone-500 opacity-0 hover:opacity-100 bg-opacity-60 absolute transition duration-300 top-0 w-full h-full flex flex-col justify-center items-center">
                       <button
                         id="test1"
                         onClick={() => sendGTMEvent({ event: "buttonClickedyes", id: "test", productName: item.name })}
