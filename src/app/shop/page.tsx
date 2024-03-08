@@ -3,7 +3,49 @@ import Tune from "../../../public/svgs/tune.svg";
 import Dots from "../../../public/svgs/fourDots.svg";
 import Box from "../../../public/svgs/box.svg";
 import Image from "next/image";
-
+import ProductItem from "@/components/productItem";
+const ProducItems = [
+  {
+    name: "Lolito 1",
+    price: "200.000.000",
+    discount: false,
+    dicountPercent: "10000",
+    disountedPrice: "100.000.000",
+    image: "/images/bedroom.jpeg",
+  },
+  {
+    name: "Lolito 2",
+    price: "200.000.000",
+    discount: false,
+    dicountPercent: "10000",
+    disountedPrice: "100.000.000",
+    image: "/images/bedroom.jpeg",
+  },
+  {
+    name: "Lolito 3",
+    price: "200.000.000",
+    discount: false,
+    dicountPercent: "10000",
+    disountedPrice: "100.000.000",
+    image: "/images/bedroom.jpeg",
+  },
+  {
+    name: "Lolito 4",
+    price: "200.000.000",
+    discount: false,
+    dicountPercent: "10000",
+    disountedPrice: "100.000.000",
+    image: "/images/bedroom.jpeg",
+  },
+  {
+    name: "Lolito 5",
+    price: "200.000.000",
+    discount: false,
+    dicountPercent: "10000",
+    disountedPrice: "100.000.000",
+    image: "/images/bedroom.jpeg",
+  },
+];
 const Shop = () => {
   return (
     <div>
@@ -36,6 +78,13 @@ const Shop = () => {
               type="text"
             />
           </div>
+        </div>
+      </div>
+      <div className="p-10">
+        <div>
+          {ProducItems.map((item, index) => {
+            return <ProductItem key={index} item={item} />;
+          })}
         </div>
       </div>
     </div>

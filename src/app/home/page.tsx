@@ -1,4 +1,3 @@
-"use client";
 import shopify from "@/utils/shopify";
 import { gql } from "graphql-request";
 import React, { useEffect } from "react";
@@ -7,6 +6,7 @@ import Compare from "../../../public/compare.svg";
 import Share from "../../../public/share.svg";
 import Heart from "../../../public/heart.svg";
 import { sendGTMEvent } from "@next/third-parties/google";
+import ProductItem from "@/components/productItem";
 
 const CategoryItems = [
   {
@@ -28,7 +28,7 @@ const ProducItems = [
     name: "Lolito 1",
     price: "200.000.000",
     discount: false,
-    dicountPercent: null,
+    dicountPercent: "10000",
     disountedPrice: "100.000.000",
     image: "/images/bedroom.jpeg",
   },
@@ -36,7 +36,7 @@ const ProducItems = [
     name: "Lolito 2",
     price: "200.000.000",
     discount: false,
-    dicountPercent: null,
+    dicountPercent: "10000",
     disountedPrice: "100.000.000",
     image: "/images/bedroom.jpeg",
   },
@@ -44,7 +44,7 @@ const ProducItems = [
     name: "Lolito 3",
     price: "200.000.000",
     discount: false,
-    dicountPercent: null,
+    dicountPercent: "10000",
     disountedPrice: "100.000.000",
     image: "/images/bedroom.jpeg",
   },
@@ -52,7 +52,7 @@ const ProducItems = [
     name: "Lolito 4",
     price: "200.000.000",
     discount: false,
-    dicountPercent: null,
+    dicountPercent: "10000",
     disountedPrice: "100.000.000",
     image: "/images/bedroom.jpeg",
   },
@@ -60,7 +60,7 @@ const ProducItems = [
     name: "Lolito 5",
     price: "200.000.000",
     discount: false,
-    dicountPercent: null,
+    dicountPercent: "10000",
     disountedPrice: "100.000.000",
     image: "/images/bedroom.jpeg",
   },
@@ -90,7 +90,9 @@ const Home = () => {
               dignissimos ducimus maiores ea tempore in,
               <br />
             </p>
-            <button className="bg-darkCream px-10 py-2 text-md text-white mt-5">Buy Now</button>
+            <button className="bg-darkCream px-10 py-2 text-md text-white mt-5">
+              Buy Now
+            </button>
           </div>
         </div>
       </div>
@@ -121,55 +123,7 @@ const Home = () => {
           <p className="text-xl font-semibold text-center">Our Products</p>
           <div className="flex flex-1 flex-wrap flex-row justify-center mt-10 gap-8 px-40">
             {ProducItems.map((item, index) => {
-              return (
-                <div key={index} className="bg-gray-100 cursor-pointer relative">
-                  <>
-                    <div>
-                      <div className="relative w-60 h-60">
-                        <Image
-                          fill
-                          quality={100}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          priority
-                          src={"/images/livingArea.jpeg"}
-                          alt={"test"}
-                        />
-                      </div>
-                      {/* <div className="bg-red-500 w-12 h-12 text-white text-xs rounded-full absolute top-2 right-2 flex justify-center items-center">
-                        10%
-                      </div> */}
-                      <div className="px-3 py-3 flex gap-1 flex-col">
-                        <p className="font-bold text-lg">{item.name}</p>
-                        <p className="font-light text-xs text-gray-500">Stylish Cafe Chair</p>
-                        <p className="text-sm font-semibold">Rp 20.00.000</p>
-                      </div>
-                    </div>
-                    <div className="bg-stone-500 opacity-0 hover:opacity-100 bg-opacity-60 absolute transition duration-300 top-0 w-full h-full flex flex-col justify-center items-center">
-                      <button
-                        id="test1"
-                        onClick={() => sendGTMEvent({ event: "buttonClickedyes", id: "test", productName: item.name })}
-                        className="bg-white px-10 py-2 text-darkCream"
-                      >
-                        Add to cart
-                      </button>
-                      <div className="mt-5 flex flex-row gap-4">
-                        <div className="flex flex-row items-center justify-center gap-1">
-                          <Image priority src={Share} className="filter invert" width={14} alt={"Cart"} />
-                          <p className="text-xs text-white ">share</p>
-                        </div>
-                        <div className="flex flex-row items-center justify-center gap-1">
-                          <Image priority src={Compare} width={14} className="filter invert" alt={"Cart"} />
-                          <p className="text-xs text-white">Compare</p>
-                        </div>
-                        <div className="flex flex-row items-center justify-center gap-1">
-                          <Image priority src={Heart} className="filter invert" width={14} alt={"Cart"} />
-                          <p className="text-xs text-white">Heart</p>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                </div>
-              );
+              return <ProductItem key={index} item={item} />;
             })}
           </div>
         </div>
