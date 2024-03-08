@@ -12,6 +12,7 @@ const config: Config = {
       colors: {
         cream: "#fff3e3",
         darkCream: "#b88e2f",
+        newGray: "#9F9F9F",
       },
       fontSize: {
         "2xs": "10px",
