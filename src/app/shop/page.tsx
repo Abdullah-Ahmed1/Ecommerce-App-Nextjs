@@ -1,9 +1,11 @@
 import React from "react";
-import Tune from "../../../public/svgs/tune.svg";
-import Dots from "../../../public/svgs/fourDots.svg";
-import Box from "../../../public/svgs/box.svg";
 import Image from "next/image";
-import ProductItem from "@/components/productItem";
+
+import Box from "../../../public/svgs/box.svg";
+import Tune from "../../../public/svgs/tune.svg";
+import ProductItem from "@/components/ProductItem";
+import Dots from "../../../public/svgs/fourDots.svg";
+
 const ProducItems = [
   {
     name: "Lolito 1",
@@ -57,10 +59,28 @@ const Shop = () => {
       </div>
       <div className="bg-cream flex flex-1 flex-row justify-between p-5 px-20">
         <div className="flex flex-row gap-x-5 items-center">
-          <Image priority src={Tune} alt={"Tune icon"} />
+          <Image
+            className="cursor-pointer"
+            priority
+            src={Tune}
+            alt={"Tune icon"}
+          />
           <p>Filter</p>
-          <Image priority src={Dots} alt={"Dots icon"} width={20} height={20} />
-          <Image priority src={Box} alt={"Box icon"} />
+
+          <Image
+            className="cursor-pointer"
+            priority
+            src={Dots}
+            alt={"Dots icon"}
+            width={20}
+            height={20}
+          />
+          <Image
+            className="cursor-pointer"
+            priority
+            src={Box}
+            alt={"Box icon"}
+          />
           <div className="border-newGray border-l-2 px-4">
             Showing 1-16 of 32 results
           </div>
@@ -81,7 +101,7 @@ const Shop = () => {
         </div>
       </div>
       <div className="p-10">
-        <div>
+        <div className="flex flex-1 flex-wrap flex-row justify-center mt-10 gap-8 px-20">
           {ProducItems.map((item, index) => {
             return <ProductItem key={index} item={item} />;
           })}

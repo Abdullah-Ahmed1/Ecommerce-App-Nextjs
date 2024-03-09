@@ -1,10 +1,10 @@
 import React from "react";
-import Image from "next/image";
-import ShoppingCart from "../../public/shoppingCart.svg";
-import Search from "../../public/search.svg";
-import Heart from "../../public/heart.svg";
-import Profile from "../../public/profile.svg";
 import Link from "next/link";
+import Image from "next/image";
+import Heart from "../../public/heart.svg";
+import Search from "../../public/search.svg";
+import Profile from "../../public/profile.svg";
+import ShoppingCart from "../../public/shoppingCart.svg";
 
 const MenuItems = [
   {
@@ -51,7 +51,10 @@ const Header = () => {
           <ul className="flex gap-x-16">
             {MenuItems.map((item, index) => {
               return (
-                <li className="inline cursor-pointer" key={index}>
+                <li
+                  className="inline cursor-pointer hover:text-cream"
+                  key={index}
+                >
                   <Link href={item.link}>{item.name}</Link>
                 </li>
               );

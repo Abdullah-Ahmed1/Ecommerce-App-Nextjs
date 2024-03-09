@@ -6,7 +6,7 @@ import Compare from "../../../public/compare.svg";
 import Share from "../../../public/share.svg";
 import Heart from "../../../public/heart.svg";
 import { sendGTMEvent } from "@next/third-parties/google";
-import ProductItem from "@/components/productItem";
+import ProductItem from "@/components/ProductItem";
 
 const CategoryItems = [
   {
