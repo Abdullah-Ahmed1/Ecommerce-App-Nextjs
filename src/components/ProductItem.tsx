@@ -5,11 +5,12 @@ import Share from "../../public/share.svg";
 import Heart from "../../public/heart.svg";
 import AddToCartButton from "./AddToCartButton";
 import { IProductItem } from "@/types/GlobalTypes";
+import Link from "next/link";
 
 const ProductItem: FC<IProductItem> = ({ item }) => {
   return (
     <div className="bg-gray-100 cursor-pointer relative">
-      <>
+      <Link href={"/product"}>
         <div>
           <div className="relative w-60 h-60">
             <Image
@@ -23,9 +24,7 @@ const ProductItem: FC<IProductItem> = ({ item }) => {
           </div>
           <div className="px-3 py-3 flex gap-1 flex-col">
             <p className="font-bold text-lg">{item.name}</p>
-            <p className="font-light text-xs text-gray-500">
-              Stylish Cafe Chair
-            </p>
+            <p className="font-light text-xs text-gray-500">Stylish Cafe Chair</p>
             <p className="text-sm font-semibold">Rp 20.00.000</p>
           </div>
         </div>
@@ -33,38 +32,20 @@ const ProductItem: FC<IProductItem> = ({ item }) => {
           <AddToCartButton item={item} />
           <div className="mt-5 flex flex-row gap-4">
             <div className="flex flex-row items-center justify-center gap-1">
-              <Image
-                priority
-                src={Share}
-                className="filter invert"
-                width={14}
-                alt={"Cart"}
-              />
+              <Image priority src={Share} className="filter invert" width={14} alt={"Cart"} />
               <p className="text-xs text-white ">share</p>
             </div>
             <div className="flex flex-row items-center justify-center gap-1">
-              <Image
-                priority
-                src={Compare}
-                width={14}
-                className="filter invert"
-                alt={"Cart"}
-              />
+              <Image priority src={Compare} width={14} className="filter invert" alt={"Cart"} />
               <p className="text-xs text-white">Compare</p>
             </div>
             <div className="flex flex-row items-center justify-center gap-1">
-              <Image
-                priority
-                src={Heart}
-                className="filter invert"
-                width={14}
-                alt={"Cart"}
-              />
+              <Image priority src={Heart} className="filter invert" width={14} alt={"Cart"} />
               <p className="text-xs text-white">Heart</p>
             </div>
           </div>
         </div>
-      </>
+      </Link>
     </div>
   );
 };
