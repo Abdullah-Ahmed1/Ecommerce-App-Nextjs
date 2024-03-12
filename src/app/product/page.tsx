@@ -1,9 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import Star from "../../../public/svgs/star.svg";
+import twColors from "tailwindcss/colors";
 
 const sizeItems = ["L", "XL", "XS"];
 const colorItems = ["red", "blue", "purple"];
+const productInfo = { SKU: "SS001", Category: "Sofas", Tags: "Sofa, Chair, Home, Shop" };
 const SingleProduct = () => {
   return (
     <div>
@@ -142,12 +144,36 @@ const SingleProduct = () => {
                 <div className="flex flex-row gap-5">
                   {colorItems.map((item, index) => {
                     return (
-                      <div key={index} className="bg-red h-8 w-8 flex justify-center items-center rounded ">
-                        {item}
-                      </div>
+                      <div
+                        key={index}
+                        className={`h-8 w-8 flex justify-center items-center rounded-full `}
+                        style={{
+                          backgroundColor: twColors[item as keyof typeof twColors]["700"],
+                        }}
+                      ></div>
                     );
                   })}
-                  <div></div>
+                </div>
+                <div className="flex flex-row gap-x-5 mt-5">
+                  <div className="flex flex-row items-center border-black border p-2 rounded-md gap-x-5">
+                    <button>-</button>
+                    <p>1</p>
+                    <button>+</button>
+                  </div>
+                  <button className="border border-black rounded-xl py-4 px-5">Add to Cart</button>
+                  <button className="border border-black rounded-xl py-4 px-5">+ Compare</button>
+                </div>
+                <div className="bg-gray-300 w-full h-px mt-10"></div>
+                <div className="mt-10">
+                  <ul className="flex flex-col gap-y-3">
+                    {Object.entries(productInfo).map(([key, value], index) => {
+                      return (
+                        <li key={index} className="text-sm">
+                          <span className="inline-block w-20 text-sm ">{key} </span>: {value}
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               </div>
             </div>

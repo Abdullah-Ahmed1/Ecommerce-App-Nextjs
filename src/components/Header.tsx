@@ -13,7 +13,7 @@ const MenuItems = [
   },
   {
     name: "Shop",
-    link: "#",
+    link: "/shop",
   },
   {
     name: "About",
@@ -51,10 +51,7 @@ const Header = () => {
           <ul className="flex gap-x-16">
             {MenuItems.map((item, index) => {
               return (
-                <li
-                  className="inline cursor-pointer hover:text-cream"
-                  key={index}
-                >
+                <li className="inline cursor-pointer hover:text-cream" key={index}>
                   <Link href={item.link}>{item.name}</Link>
                 </li>
               );
