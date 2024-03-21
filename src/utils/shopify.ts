@@ -2,7 +2,7 @@ import { GraphQLClient } from "graphql-request";
 
 const shopify = async (query: any, variables: any) => {
   const headers = new Headers();
-  headers.set("X-Shopify-Storefront-Access-Token", process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || "");
+  headers.set("X-Shopify-Storefront-Access-Token", process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || "331f51625b72f4a66c255aae60185c6e");
   const graphQLClient = new GraphQLClient("https://bessersol.myshopify.com/api/2024-01/graphql.json", {
     headers,
   });

@@ -23,6 +23,7 @@ export default function RootLayout({
         <GoogleTagManager gtmId="GTM-TJG8XG78" />
         <Header />
         {children}
+        {/* <div id="modal-root" /> */}
         <Footer />
       </body>
     </html>

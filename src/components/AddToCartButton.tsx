@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { sendGTMEvent } from "@next/third-parties/google";
 import { IProductItem } from "@/types/GlobalTypes";
 
-const AddToCartButton: FC<IProductItem> = ({ item }) => {
+const AddToCartButton = ({ item }: any) => {
   return (
     <button
       id="test1"

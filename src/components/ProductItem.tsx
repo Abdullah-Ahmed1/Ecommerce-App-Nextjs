@@ -1,16 +1,17 @@
+import Link from "next/link";
 import Image from "next/image";
 import React, { FC } from "react";
-import Compare from "../../public/compare.svg";
 import Share from "../../public/share.svg";
 import Heart from "../../public/heart.svg";
+import Compare from "../../public/compare.svg";
 import AddToCartButton from "./AddToCartButton";
 import { IProductItem } from "@/types/GlobalTypes";
-import Link from "next/link";
 
-const ProductItem: FC<IProductItem> = ({ item }) => {
+const ProductItem = ({ item }: any) => {
+  console.log("item");
   return (
     <div className="bg-gray-100 cursor-pointer relative">
-      <Link href={"/product"}>
+      <Link href={"/shop/12"} passHref>
         <div>
           <div className="relative w-60 h-60">
             <Image
@@ -23,9 +24,11 @@ const ProductItem: FC<IProductItem> = ({ item }) => {
             />
           </div>
           <div className="px-3 py-3 flex gap-1 flex-col">
-            <p className="font-bold text-lg">{item.name}</p>
+            <p className="font-bold text-lg">{item.node.title}</p>
             <p className="font-light text-xs text-gray-500">Stylish Cafe Chair</p>
-            <p className="text-sm font-semibold">Rp 20.00.000</p>
+            <p className="text-sm font-semibold">
+              {item.node.priceRange.maxVariantPrice.currencyCode} {item.node.priceRange.maxVariantPrice.amount}
+            </p>
           </div>
         </div>
         <div className="bg-stone-500 opacity-0 hover:opacity-100 bg-opacity-60 absolute transition duration-300 top-0 w-full h-full flex flex-col justify-center items-center">

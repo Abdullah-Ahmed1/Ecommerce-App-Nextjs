@@ -1,10 +1,28 @@
 export interface IProductItem {
-  item: {
-    name: string;
-    price: string;
-    discount: boolean;
-    dicountPercent: string;
-    disountedPrice: string;
-    image: string;
+  node: {
+    id: string;
+    title: string;
+    priceRange: {
+      maxVariantPrice: {
+        amount: string;
+        currencyCode: string;
+      };
+    };
+    featuredImage: {
+      id: string;
+      url: string;
+    };
+    images: {
+      nodes: {
+        id: string;
+        url: string;
+      }[];
+    };
+  };
+}
+
+export interface IProductItems {
+  products: {
+    edges: IProductItem[];
   };
 }

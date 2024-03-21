@@ -2,11 +2,12 @@ import shopify from "@/utils/shopify";
 import { gql } from "graphql-request";
 import React, { useEffect } from "react";
 import Image from "next/image";
-import Compare from "../../../public/compare.svg";
-import Share from "../../../public/share.svg";
-import Heart from "../../../public/heart.svg";
-import { sendGTMEvent } from "@next/third-parties/google";
+// import Compare from "../../../public/compare.svg";
+// import Share from "../../../public/share.svg";
+// import Heart from "../../../public/heart.svg";
+// import { sendGTMEvent } from "@next/third-parties/google";
 import ProductItem from "@/components/ProductItem";
+import { IProductItem, IProductItems } from "@/types/GlobalTypes";
 
 const CategoryItems = [
   {
@@ -65,7 +66,44 @@ const ProducItems = [
     image: "/images/bedroom.jpeg",
   },
 ];
-const Home = () => {
+
+const Home = async () => {
+  const handleRequest = async () => {
+    "use server";
+    const query = gql`
+      query getAllProducts {
+        products(first: 5) {
+          edges {
+            node {
+              id
+              title
+              priceRange {
+                maxVariantPrice {
+                  amount
+                  currencyCode
+                }
+              }
+              featuredImage {
+                id
+                url
+              }
+              images(first: 5) {
+                nodes {
+                  id
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+    const results: IProductItems = (await shopify(query, null)) as IProductItems;
+    console.log("results", results);
+    return results;
+  };
+  const data: IProductItems = (await handleRequest()) as IProductItems;
+
   return (
     <>
       <div className="h-screen">
@@ -90,9 +128,7 @@ const Home = () => {
               dignissimos ducimus maiores ea tempore in,
               <br />
             </p>
-            <button className="bg-darkCream px-10 py-2 text-md text-white mt-5">
-              Buy Now
-            </button>
+            <button className="bg-darkCream px-10 py-2 text-md text-white mt-5">Buy Now</button>
           </div>
         </div>
       </div>
@@ -122,7 +158,7 @@ const Home = () => {
         <div className="mt-14 flex flex-col">
           <p className="text-xl font-semibold text-center">Our Products</p>
           <div className="flex flex-1 flex-wrap flex-row justify-center mt-10 gap-8 px-40">
-            {ProducItems.map((item, index) => {
+            {data?.products?.edges.map((item: any, index) => {
               return <ProductItem key={index} item={item} />;
             })}
           </div>
