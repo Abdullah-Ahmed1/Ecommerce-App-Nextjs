@@ -20,11 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <GoogleTagManager gtmId="GTM-TJG8XG78" />
-        <Header />
-        {children}
-        {/* <div id="modal-root" /> */}
-        <Footer />
+        <main className="flex flex-col w-full h-full overflow-auto">
+          <GoogleTagManager gtmId="GTM-TJG8XG78" />
+          <Header />
+          {children}
+          <Footer />
+        </main>
       </body>
     </html>
   );
