@@ -142,9 +142,12 @@ const SingleProduct = () => {
               <div>
                 <p className="my-3">Color12</p>
                 <div className="flex flex-row gap-5">
-                  {colorItems.map((item) => {
+                  {colorItems.map((item, index) => {
                     return (
-                      <div className="bg-red h-8 w-8 flex justify-center items-center rounded "></div>
+                      <div
+                        key={index}
+                        className="bg-red h-8 w-8 flex justify-center items-center rounded "
+                      ></div>
                     );
                   })}
                   <div></div>
