@@ -29,7 +29,6 @@ const Register = () => {
 
     try {
       const result = await shopify(query, input);
-      console.log("result", result);
     } catch (error) {
       console.error("Error:", error);
       return {

@@ -2,6 +2,18 @@ import React from "react";
 import LoginForm from "./form";
 import { gql } from "graphql-request";
 import DataContainer from "./dataContainer";
+import shopify from "@/utils/shopify";
+import { cookies } from "next/headers";
+
+interface CustomerAccessTokenCreateResult {
+  customerAccessTokenCreate: {
+    customerUserErrors: [];
+    customerAccessToken: {
+      accesToken: string;
+      expiresAt: string;
+    };
+  };
+}
 
 const LoginPage = () => {
   const handleSubmit = async (event: any) => {
@@ -13,7 +25,9 @@ const LoginPage = () => {
       },
     };
     const query = gql`
-      mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+      mutation customerAccessTokenCreate(
+        $input: CustomerAccessTokenCreateInput!
+      ) {
         customerAccessTokenCreate(input: $input) {
           customerUserErrors {
             code
@@ -27,6 +41,18 @@ const LoginPage = () => {
         }
       }
     `;
+    try {
+      const result: CustomerAccessTokenCreateResult = (await shopify(
+        query,
+        input
+      )) as CustomerAccessTokenCreateResult;
+      cookies().set(
+        "token",
+        result.customerAccessTokenCreate.customerAccessToken.accesToken
+      );
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
