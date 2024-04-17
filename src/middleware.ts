@@ -10,3 +10,8 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: ["/profile"],
 };
+
+export const handleShare = () => {
+  const resultArray: any = [];
+  return resultArray;
+};
