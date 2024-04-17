@@ -1,8 +1,7 @@
 import React from "react";
 import LoginForm from "./form";
-import { gql } from "graphql-request";
-import DataContainer from "./dataContainer";
 import shopify from "@/utils/shopify";
+import { gql } from "graphql-request";
 import { cookies } from "next/headers";
 
 interface CustomerAccessTokenCreateResult {
@@ -58,7 +57,6 @@ const LoginPage = () => {
   return (
     <>
       <LoginForm handleSubmit={handleSubmit} />
-      <DataContainer />
     </>
   );
 };
