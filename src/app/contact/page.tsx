@@ -33,7 +33,7 @@ const Contact = () => {
                   src={Location}
                   alt={"Location"}
                 />
-                <div className="flex flex-col  w-1/2">
+                <div className="flex flex-col">
                   <p className="text-lg font-bold">Address</p>
                   <p>236 5th SE Avenue, New York NY10000, United States</p>
                 </div>
@@ -74,7 +74,9 @@ const Contact = () => {
             <div className="flex flex-col items-center justify-center w-1/2 ">
               <div className="flex flex-col w-full gap-y-5">
                 <div className="flex flex-col w-[60%]">
-                  <label htmlFor="fullname">Your name</label>
+                  <label htmlFor="fullname" className="text-sm">
+                    Your name
+                  </label>
                   <input
                     name="fullname"
                     type="text"
@@ -83,7 +85,20 @@ const Contact = () => {
                   />
                 </div>
                 <div className="flex flex-col w-[60%]">
-                  <label htmlFor="fullname">Your Email</label>
+                  <label htmlFor="fullname" className="text-sm">
+                    Your Email
+                  </label>
+                  <input
+                    name="fullname"
+                    type="text"
+                    className="py-3 px-1 border border-sm border-black  rounded"
+                    placeholder="name"
+                  />
+                </div>
+                <div className="flex flex-col w-[60%] ">
+                  <label htmlFor="fullname" className="text-sm">
+                    Your Phone
+                  </label>
                   <input
                     name="fullname"
                     type="text"
@@ -92,23 +107,16 @@ const Contact = () => {
                   />
                 </div>
                 <div className="flex flex-col w-[60%]">
-                  <label htmlFor="fullname">Your Phone</label>
-                  <input
-                    name="fullname"
-                    type="text"
-                    className="py-3 px-1 border border-sm border-black  rounded"
-                    placeholder="name"
-                  />
-                </div>
-                <div className="flex flex-col w-[60%]">
-                  <label htmlFor="fullname">Your Test</label>
+                  <label htmlFor="fullname" className="text-sm">
+                    Your Test
+                  </label>
                   <textarea
                     name="fullname"
                     className=" py-3 px-1 border border-sm border-black  rounded"
                     placeholder="name"
                   />
                 </div>
-                <button className="bg-darkCream px-6 w-[30%] py-1 rounded-sm">
+                <button className="bg-darkCream px-6 w-[30%] py-1 rounded-sm text-white">
                   Submit
                 </button>
               </div>
