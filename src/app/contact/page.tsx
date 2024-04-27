@@ -2,9 +2,40 @@ import React from "react";
 import Location from "../../../public/location.svg";
 import Phone from "../../../public/phone.svg";
 import Clock from "../../../public/clock.svg";
+import Quality from "../../../public/svgs/trophy.svg";
+import Warranty from "../../../public/svgs/guarantee.svg";
+import Shipping from "../../../public/svgs/shipping.svg";
+import Support from "../../../public/svgs/customer-support.svg";
 import Image from "next/image";
 
 const Contact = () => {
+  const offfering = [
+    {
+      id: 1,
+      title: "High Quality",
+      text: "crafted from top materials",
+      icon: Quality,
+    },
+    {
+      id: 2,
+      title: "Warranty Protection",
+      text: "Over 2 years",
+      icon: Warranty,
+    },
+    {
+      id: 3,
+      title: "Free shipping",
+      text: "order over 150$",
+      icon: Shipping,
+    },
+    {
+      id: 4,
+      title: "24/7 support",
+      text: "Dedicated support",
+      icon: Support,
+    },
+  ];
+
   return (
     <div>
       <div className="bg-red-500 w-full h-80 relative">
@@ -13,8 +44,8 @@ const Contact = () => {
           <p>{"Home > Contact"}</p>
         </div>
       </div>
-      <div className="bd-red-500 flex justify-center">
-        <div className="flex flex-col w-[80%] ">
+      <div className="bd-red-500 flex flex-col items-center">
+        <div className="flex flex-col w-[90%] ">
           <div className="flex flex-col items-center py-20">
             <p className="text-2xl font-bold">Get In Touch With Us</p>
             <p className="text-center text-gray-400">
@@ -122,6 +153,19 @@ const Contact = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="flex flex-row gap-x-1 bg-cream w-full justify-around py-10">
+          {offfering.map((item, index) => (
+            <div key={index} className="flex flexx-row gap-x-1">
+              <div>
+                <Image src={item.icon} width={40} alt="quality" />
+              </div>
+              <div className="flex flex-col">
+                <p className="p-0 m-0 text-lg font-bold">{item.title}</p>
+                <p className="text-[10px] text-gray-500">{item.text}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
