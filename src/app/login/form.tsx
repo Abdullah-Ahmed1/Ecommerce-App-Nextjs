@@ -28,7 +28,7 @@ const LoginForm: React.FC<ILoginForm> = ({ handleSubmit }) => {
               <input
                 name="email"
                 type="text"
-                className="border-2 rounded-md p-1 w-72"
+                className="border-2 focus:border focus:border-cream rounded-md p-1 w-72"
               />
             </div>
             <div className="flex flex-col mt-4">
@@ -36,10 +36,7 @@ const LoginForm: React.FC<ILoginForm> = ({ handleSubmit }) => {
                 <label htmlFor="" className="font-sans">
                   Password
                 </label>
-                <a
-                  href=""
-                  className="font-sans text-indigo-600 hover:text-indigo-500"
-                >
+                <a href="" className="font-sans text-darkCream">
                   Forgot password?
                 </a>
               </div>
@@ -50,7 +47,7 @@ const LoginForm: React.FC<ILoginForm> = ({ handleSubmit }) => {
               />
               <button
                 type="submit"
-                className="bg-indigo-600 hover:bg-indigo-500 p-1 text-white rounded-md mt-5"
+                className="bg-cream text-darkCream  hover:bg-darkCream p-1 hover:text-white rounded-md mt-5"
               >
                 Sign in
               </button>
@@ -58,7 +55,7 @@ const LoginForm: React.FC<ILoginForm> = ({ handleSubmit }) => {
                 <p>
                   Not a member?
                   <span>
-                    <Link href="/register" className="text-indigo-600">
+                    <Link href="/register" className="text-darkCream">
                       Sign Up
                     </Link>
                   </span>

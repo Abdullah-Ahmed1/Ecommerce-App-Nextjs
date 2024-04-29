@@ -51,7 +51,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ handleSubmit }) => {
                   </label>
                   <a
                     href=""
-                    className="font-sans text-indigo-600 hover:text-indigo-500"
+                    className="font-sans text-darkCream hover:text-darkCream"
                   >
                     Forgot password?
                   </a>
@@ -76,7 +76,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ handleSubmit }) => {
               </div>
               <button
                 type="submit"
-                className="bg-indigo-600 hover:bg-indigo-500 p-1 text-white rounded-md mt-5"
+                className="bg-cream text-darkCream hover:bg-darkCream  hover:text-white p-1  rounded-md mt-5"
               >
                 Register
               </button>
@@ -84,7 +84,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ handleSubmit }) => {
                 <p>
                   Already a member ?
                   <span>
-                    <Link href="/login" className="text-indigo-600">
+                    <Link href="/login" className="text-darkCream">
                       Login Up
                     </Link>
                   </span>
