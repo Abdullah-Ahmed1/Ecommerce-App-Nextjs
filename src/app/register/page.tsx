@@ -38,7 +38,7 @@ const Register = () => {
     }
   };
 
-  return <RegisterForm handleSubmit={handleSubmit} />;
+  return <RegisterForm handleSubmitForm={handleSubmit} />;
 };
 
 export default Register;

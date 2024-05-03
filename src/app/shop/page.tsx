@@ -112,7 +112,6 @@ const Shop = async () => {
       query,
       null
     )) as IProductItems;
-    console.log("results", results);
     return results;
   };
   const data: IProductItems = (await handleRequest()) as IProductItems;

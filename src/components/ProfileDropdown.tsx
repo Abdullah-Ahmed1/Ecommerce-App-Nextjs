@@ -1,15 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Profile from "../../public/profile.svg";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
 import Image from "next/image";
 export const ProfileDropdown = () => {
-  const parentRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const pathname = usePathname();
-  console.log("pathname:", pathname);
+  const parentRef = useRef<HTMLDivElement | null>(null);
   const [showDropDown, setShowDropDown] = useState(false);
 
   useEffect(() => {
@@ -17,7 +16,6 @@ export const ProfileDropdown = () => {
     if (!parent) return;
 
     const listener = (evt: MouseEvent) => {
-      console.debug("Clicked:", evt.target);
       if (parent.contains(evt.target as HTMLElement)) return;
       setShowDropDown(false);
     };

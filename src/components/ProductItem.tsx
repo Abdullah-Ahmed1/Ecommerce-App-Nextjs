@@ -8,7 +8,6 @@ import AddToCartButton from "./AddToCartButton";
 import { IProductItem } from "@/types/GlobalTypes";
 
 const ProductItem = ({ item }: any) => {
-  console.log("item");
   return (
     <div>
       <div className="bg-gray-100 cursor-pointer relative">

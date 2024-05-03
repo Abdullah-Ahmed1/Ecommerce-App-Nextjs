@@ -93,11 +93,9 @@ const Header = () => {
           <ul className="flex gap-x-5">
             {IconItems.map((item, index) => {
               return (
-                <>{item.icon}</>
-                // <li key={index} className="cursor-pointer">
-                //   {/* <Image priority src={item.icon} alt={item.name} /> */}
-                //   <button>ClassName</button>
-                // </li>
+                <div key={index} className="flex content-center">
+                  {item.icon}
+                </div>
               );
             })}
           </ul>
