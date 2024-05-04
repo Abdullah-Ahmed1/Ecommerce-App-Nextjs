@@ -1,9 +1,9 @@
 "use client";
 import z from "zod";
-import React, { ReactNode, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
+import React, { ReactNode, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 interface IRegisterForm {
@@ -14,11 +14,14 @@ interface IRegisterForm {
 
 const RegisterForm: React.FC<IRegisterForm> = ({ handleSubmitForm }) => {
   const [loading, setLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [statusCode, setStatusCode] = useState<null | number>(null);
   const registerSchema = z
     .object({
       username: z.string().min(4),
       email: z.string().email(),
-      password: z.string(),
+      password: z.string().min(5),
       confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -37,52 +40,79 @@ const RegisterForm: React.FC<IRegisterForm> = ({ handleSubmitForm }) => {
     const result = await handleSubmitForm(data);
 
     setLoading(false);
+    result?.message && setToastMessage(result?.message);
+    result?.status && setStatusCode(result?.status);
+
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 3000);
   };
 
   return (
     <>
-      <div
-        id="toast-success"
-        className="fixed right-5 top-5 mb-4 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-white shadow dark:bg-darkCream dark:text-white"
-        role="alert"
-      >
-        <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
-          <svg
-            className="h-5 w-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-          </svg>
-          <span className="sr-only">Check icon</span>
-        </div>
-        <div className="ms-3 text-sm font-normal">Item moved successfully.</div>
-        <button
-          type="button"
-          className="hover:bg-darkCareem -mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-white hover:text-darkCream focus:ring-2 focus:ring-gray-300 dark:bg-darkCream dark:text-white dark:hover:bg-cream dark:hover:text-darkCream"
-          data-dismiss-target="#toast-success"
-          aria-label="Close"
+      {showToast && (
+        <div
+          id="toast-success"
+          className="fixed right-5 top-5 mb-4 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-white shadow dark:bg-darkCream dark:text-white"
+          role="alert"
         >
-          <span className="sr-only">Close</span>
-          <svg
-            className="h-3 w-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 14"
+          {statusCode === 200 ? (
+            <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-darkCream dark:text-green-200">
+              <svg
+                className="h-5 w-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+              </svg>
+              <span className="sr-only">Check icon</span>
+            </div>
+          ) : (
+            <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-darkCream text-orange-500 dark:bg-darkCream dark:text-orange-200">
+              <svg
+                className="h-5 w-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z" />
+              </svg>
+              <span className="sr-only">Warning icon</span>
+            </div>
+          )}
+
+          <div className="ms-3 text-sm font-normal">{toastMessage}</div>
+          <button
+            type="button"
+            onClick={() => setShowToast(false)}
+            className="hover:bg-darkCareem -mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-white hover:text-darkCream focus:ring-2 focus:ring-gray-300 dark:bg-darkCream dark:text-white dark:hover:bg-cream dark:hover:text-darkCream"
+            data-dismiss-target="#toast-success"
+            aria-label="Close"
           >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-            />
-          </svg>
-        </button>
-      </div>
+            <span className="sr-only">Close</span>
+            <svg
+              className="h-3 w-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </button>
+        </div>
+      )}
+
       <main className="flex h-screen flex-row items-center justify-center">
         <div className=" w-3/6">
           <div className="flex flex-col items-center  ">
