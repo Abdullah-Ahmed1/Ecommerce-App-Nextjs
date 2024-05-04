@@ -4,12 +4,12 @@ import shopify from "@/utils/shopify";
 import { gql } from "graphql-request";
 
 const Register = () => {
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (data: any) => {
     "use server";
     const input = {
       input: {
-        email: event.get("email"),
-        password: event.get("password"),
+        email: data.email,
+        password: data.password,
       },
     };
     const query = gql`
@@ -28,12 +28,23 @@ const Register = () => {
     `;
 
     try {
-      const result = await shopify(query, input);
+      const result: any = await shopify(query, input);
+      if (result?.customerCreate?.customerUserErrors.length == 0) {
+        return {
+          status: 200,
+          message: "User created successfully",
+        };
+      } else {
+        return {
+          status: 600,
+          message: result.customerCreate.customerUserErrors[0].message,
+        };
+      }
     } catch (error) {
       console.error("Error:", error);
       return {
         status: 500,
-        error: "Error receiving data",
+        message: "Error receiving data",
       };
     }
   };
