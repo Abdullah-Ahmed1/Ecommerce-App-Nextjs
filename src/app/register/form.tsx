@@ -80,6 +80,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ handleSubmitForm }) => {
                 <input
                   required
                   type="text"
+                  placeholder="Jhon Doe"
                   {...register("username")}
                   className="w-72 rounded-md border-2 p-1"
                 />
@@ -93,6 +94,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ handleSubmitForm }) => {
                 </label>
                 <input
                   required
+                  placeholder="test@gmail.com"
                   {...register("email")}
                   type="text"
                   className="w-72 rounded-md border-2 p-1"
@@ -101,18 +103,11 @@ const RegisterForm: React.FC<IRegisterForm> = ({ handleSubmitForm }) => {
                   {errors.email?.message as ReactNode}
                 </sub>
               </div>
-              {/* <div className="flex flex-col "> */}
               <div className="flex flex-col">
                 <div className="flex flex-row justify-between">
                   <label htmlFor="" className="font-sans">
                     Password
                   </label>
-                  <a
-                    href=""
-                    className="font-sans text-darkCream hover:text-darkCream"
-                  >
-                    Forgot password?
-                  </a>
                 </div>
                 <input
                   required

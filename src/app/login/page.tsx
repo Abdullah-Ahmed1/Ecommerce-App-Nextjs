@@ -4,9 +4,15 @@ import shopify from "@/utils/shopify";
 import { gql } from "graphql-request";
 import { cookies } from "next/headers";
 
+interface customerUserError {
+  code: string;
+  field: any;
+  message: string;
+}
+
 interface CustomerAccessTokenCreateResult {
   customerAccessTokenCreate: {
-    customerUserErrors: [];
+    customerUserErrors: customerUserError[] | [];
     customerAccessToken: {
       accesToken: string;
       expiresAt: string;
@@ -43,14 +49,23 @@ const LoginPage = () => {
     try {
       const result: CustomerAccessTokenCreateResult = (await shopify(
         query,
-        input
+        input,
       )) as CustomerAccessTokenCreateResult;
+
+      console.debug("login", result.customerAccessTokenCreate);
+      if (result.customerAccessTokenCreate.customerUserErrors.length > 0) {
+        return {
+          status: 500,
+          message:
+            result?.customerAccessTokenCreate?.customerUserErrors[0]?.message,
+        };
+      }
       cookies().set(
         "token",
-        result.customerAccessTokenCreate.customerAccessToken.accesToken
+        result.customerAccessTokenCreate.customerAccessToken.accesToken,
       );
     } catch (error) {
-      console.error("Error:", error);
+      console.log("Error:", error);
     }
   };
 

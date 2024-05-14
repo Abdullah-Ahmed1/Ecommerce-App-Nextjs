@@ -1,7 +1,7 @@
+import Image from "next/image";
 import shopify from "@/utils/shopify";
 import { gql } from "graphql-request";
-import React, { useEffect } from "react";
-import Image from "next/image";
+import React from "react";
 import ProductItem from "@/components/ProductItem";
 import { IProductItem, IProductItems } from "@/types/GlobalTypes";
 
@@ -96,7 +96,7 @@ const Home = async () => {
     `;
     const results: IProductItems = (await shopify(
       query,
-      null
+      null,
     )) as IProductItems;
     return results;
   };
@@ -105,55 +105,52 @@ const Home = async () => {
   return (
     <>
       <div className="h-screen bg-green-800">
-        <div className="flex flex-1 relative w-full  bg-red-500">
+        <div className="relative flex w-full flex-1  bg-red-500">
           <div className="h-[86vh]">
             <Image
               fill
-              quality={100}
-              style={{ objectFit: "cover" }}
-              // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority
-              src={"/images/Cover.png"}
-              // height={500}
-              // width={1500}
+              quality={100}
               alt={"cover"}
+              src={"/images/banner1.png"}
+              style={{ objectFit: "cover" }}
             />
           </div>
 
           <div className="absolute bottom-40 right-20 bg-cream px-10 py-5">
             <p className="text-xs font-semibold">New Arrival</p>
-            <h3 className="text-4xl font-bold text-darkCream mt-2">
+            <h3 className="mt-2 text-4xl font-bold text-darkCream">
               Discover Our <br />
               New Collection{" "}
             </h3>
-            <p className="text-sm mt-2">
+            <p className="mt-2 text-sm">
               Lorem ipsum dolor sit amet <br />
               consectetur adipisicing elit. Perspiciatis accusantium <br />
               dignissimos ducimus maiores ea tempore in,
               <br />
             </p>
-            <button className="bg-darkCream px-10 py-2 text-md text-white mt-5">
+            <button className="text-md mt-5 bg-darkCream px-10 py-2 text-white">
               Buy Now
             </button>
           </div>
         </div>
       </div>
-      <div className="flex flex-1 flex-col items-center z-50 mt-10 mb-5">
+      <div className="z-50 mb-5 mt-10 flex flex-1 flex-col items-center">
         <p className="text-xl font-semibold">Browse The Range</p>
         <p className="text-sm ">Check Our Products </p>
-        <div className="flex flex-1 flex-row mt-10 gap-x-10">
+        <div className="mt-10 flex flex-1 flex-row gap-x-10">
           {CategoryItems.map((item, index) => {
             return (
               <div key={index} className="flex flex-col">
-                <div className="w-80 h-96 relative rounded-md cursor-pointer">
+                <div className="relative h-96 w-80 cursor-pointer rounded-md">
                   <Image
-                    className="rounded-md"
                     fill
-                    quality={100}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority
-                    src={item.image}
+                    quality={100}
                     alt={item.name}
+                    src={item.image}
+                    className="rounded-md"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
                 <p className="text-center">{item.name}</p>
@@ -162,8 +159,8 @@ const Home = async () => {
           })}
         </div>
         <div className="mt-14 flex flex-col">
-          <p className="text-xl font-semibold text-center">Our Products</p>
-          <div className="flex flex-1 flex-wrap flex-row justify-center mt-10 gap-8 px-40">
+          <p className="text-center text-xl font-semibold">Our Products</p>
+          <div className="mt-10 flex flex-1 flex-row flex-wrap justify-center gap-8 px-40">
             {data?.products?.edges.map((item: any, index) => {
               return <ProductItem key={index} item={item} />;
             })}
