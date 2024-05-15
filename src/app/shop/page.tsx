@@ -2,12 +2,13 @@ import React from "react";
 import Image from "next/image";
 import { gql } from "graphql-request";
 
+import shopify from "@/utils/shopify";
 import Box from "../../../public/svgs/box.svg";
 import Tune from "../../../public/svgs/tune.svg";
 import ProductItem from "@/components/ProductItem";
 import Dots from "../../../public/svgs/fourDots.svg";
-import shopify from "@/utils/shopify";
 import { IProductItems, IProductItem } from "@/types/GlobalTypes";
+
 interface IData {
   products: {
     edges: {
@@ -110,7 +111,7 @@ const Shop = async () => {
     `;
     const results: IProductItems = (await shopify(
       query,
-      null
+      null,
     )) as IProductItems;
     return results;
   };
@@ -118,14 +119,14 @@ const Shop = async () => {
 
   return (
     <div>
-      <div className="bg-red-500 w-full h-80 relative">
-        <div className="absolute top-0 left-0 flex flex-col justify-center items-center w-full h-80 gap-5">
+      <div className="relative h-80 w-full bg-red-500">
+        <div className="absolute left-0 top-0 flex h-80 w-full flex-col items-center justify-center gap-5">
           <p className="text-3xl font-bold">Shop</p>
           <p>{"Home > Shop"}</p>
         </div>
       </div>
-      <div className="bg-cream flex flex-1 flex-row justify-between p-5 px-20">
-        <div className="flex flex-row gap-x-5 items-center">
+      <div className="flex flex-1 flex-row justify-between bg-cream p-5 px-20">
+        <div className="flex flex-row items-center gap-x-5">
           <Image
             className="cursor-pointer"
             priority
@@ -148,19 +149,19 @@ const Shop = async () => {
             src={Box}
             alt={"Box icon"}
           />
-          <div className="border-newGray border-l-2 px-4">
+          <div className="border-l-2 border-newGray px-4">
             Showing 1-16 of 32 results
           </div>
         </div>
         <div className="flex flex-row items-center gap-x-5">
-          <div className="flex flex-row gap-x-3  items-center">
+          <div className="flex flex-row items-center  gap-x-3">
             <p>Show</p>
-            <input className="w-10 h-10 pl-3 " placeholder="16" type="text" />
+            <input className="h-10 w-10 pl-3 " placeholder="16" type="text" />
           </div>
-          <div className="flex flex-row gap-x-3  items-center">
+          <div className="flex flex-row items-center  gap-x-3">
             <p>Short by</p>
             <input
-              className="w-20 h-10 pl-3 "
+              className="h-10 w-20 pl-3 "
               placeholder="Default"
               type="text"
             />
@@ -168,7 +169,7 @@ const Shop = async () => {
         </div>
       </div>
       <div className="p-10">
-        <div className="flex flex-1 flex-wrap flex-row justify-center mt-10 gap-8 px-20">
+        <div className="mt-10 flex flex-1 flex-row flex-wrap justify-center gap-8 px-20">
           {data?.products?.edges.map((item: IProductItem, index: number) => {
             return <ProductItem key={index} item={item} />;
           })}

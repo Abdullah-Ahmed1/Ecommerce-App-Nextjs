@@ -1,7 +1,7 @@
+import React from "react";
 import Image from "next/image";
 import shopify from "@/utils/shopify";
 import { gql } from "graphql-request";
-import React from "react";
 import ProductItem from "@/components/ProductItem";
 import { IProductItem, IProductItems } from "@/types/GlobalTypes";
 
