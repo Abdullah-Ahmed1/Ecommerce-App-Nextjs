@@ -2,11 +2,10 @@
 import z from "zod";
 import Link from "next/link";
 import Image from "next/image";
+import Toast from "@/components/Toast";
 import { useForm } from "react-hook-form";
 import React, { ReactNode, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import Toast from "@/components/Toast";
 
 interface IRegisterForm {
   handleSubmitForm: (
