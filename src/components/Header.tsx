@@ -72,8 +72,8 @@ const Header = () => {
     },
   ];
   return (
-    <div className="bg-white flex flex-row px-16 py-5">
-      <div className="flex flex-1 flex-row justify-between items-center">
+    <div className="flex flex-row bg-white px-16 py-5 sm:bg-gray-500 md:bg-gray-300">
+      <div className="flex flex-1 flex-row items-center justify-between">
         <div>Logo</div>
         <div>
           <ul className="flex gap-x-16">

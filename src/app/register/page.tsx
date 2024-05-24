@@ -41,7 +41,7 @@ const Register = () => {
         };
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error11:", error);
       return {
         status: 500,
         message: "Error receiving data",

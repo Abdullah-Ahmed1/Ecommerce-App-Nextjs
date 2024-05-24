@@ -1,11 +1,16 @@
 import { GraphQLClient } from "graphql-request";
 
 const shopify = async (query: any, variables: any) => {
+  const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  if (!token) return;
   const headers = new Headers();
-  headers.set("X-Shopify-Storefront-Access-Token", process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || "331f51625b72f4a66c255aae60185c6e");
-  const graphQLClient = new GraphQLClient("https://bessersol.myshopify.com/api/2024-01/graphql.json", {
-    headers,
-  });
+  headers.set("X-Shopify-Storefront-Access-Token", token);
+  const graphQLClient = new GraphQLClient(
+    "https://taste-test-thrill-seekers.myshopify.com/api/2024-04/graphql.json",
+    {
+      headers,
+    },
+  );
   return await graphQLClient.request(query, variables);
 };
 export default shopify;
