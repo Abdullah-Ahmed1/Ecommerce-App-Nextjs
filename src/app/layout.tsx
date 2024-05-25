@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { GoogleTagManager } from "@next/third-parties/google";
+import HeaderNew from "@/components/HeaderNew";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} "testing"`}>
-        <main className="flex flex-col w-full h-full overflow-auto">
+        <main className="flex h-full w-full flex-col overflow-auto">
           <GoogleTagManager gtmId="GTM-TJG8XG78" />
-          <Header />
+          {/* <Header /> */}
+          <HeaderNew />
           {children}
           <Footer />
         </main>

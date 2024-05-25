@@ -72,11 +72,11 @@ const Header = () => {
     },
   ];
   return (
-    <div className="flex flex-row bg-white px-16 py-5 sm:bg-gray-500 md:bg-gray-300">
+    <div className="flex flex-row px-16 py-5 sm:bg-gray-500 md:bg-gray-300 lg:bg-white">
       <div className="flex flex-1 flex-row items-center justify-between">
         <div>Logo</div>
         <div>
-          <ul className="flex gap-x-16">
+          <ul className="hidden md:flex  md:gap-x-8  lg:gap-x-16 ">
             {MenuItems.map((item, index) => {
               return (
                 <li
