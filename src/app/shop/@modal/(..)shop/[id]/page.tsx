@@ -19,14 +19,14 @@ const PhotoModal = () => {
   return (
     <div
       onClick={handleBack}
-      className="bg-gray-700 bg-opacity-50 fixed top-0 w-screen h-[100dvh] flex overflow-y-auto justify-center  items-center"
+      className="fixed top-0 flex h-[100dvh] w-screen items-center justify-center overflow-y-auto bg-gray-700  bg-opacity-50"
     >
       <div
         onClick={stopPropgation}
-        className=" bg-white w-4/5 h-3/4 opacity-100 rounded flex items-center  p-5"
+        className=" flex h-3/4 w-4/5 items-center rounded bg-white p-5  opacity-100"
       >
-        <div className="  flex flex-row w-full h-full items-center gap-x-10">
-          <div className="relative w-96 h-full rounded">
+        <div className="  flex h-full w-full flex-row items-center gap-x-10">
+          <div className="relative h-full w-96 rounded">
             <div className="relative w-96 rounded" style={{ height: "92%" }}>
               <Image
                 className="rounded"
@@ -38,7 +38,7 @@ const PhotoModal = () => {
                 alt={"test"}
               />
             </div>
-            <div className="p-5 flex justify-center w-full ">
+            <div className="flex w-full justify-center p-5 ">
               <Image
                 priority
                 src={LeftIcon}
@@ -54,12 +54,12 @@ const PhotoModal = () => {
             </div>
           </div>
           <div className="px-10">
-            <p className="text-2xl my-1">Product Name</p>
-            <p className="text-md text-newGray  my-1"> Rs 25,0000</p>
-            <div className="flex flex-row gap-5 h-8">
-              <div className="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
+            <p className="my-1 text-2xl">Product Name</p>
+            <p className="text-md my-1  text-newGray"> Rs 25,0000</p>
+            <div className="flex h-8 flex-row gap-5">
+              <div className="mb-1 flex items-center space-x-1 rtl:space-x-reverse">
                 <svg
-                  className="w-4 h-4 text-yellow-300"
+                  className="h-4 w-4 text-yellow-300"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -68,7 +68,7 @@ const PhotoModal = () => {
                   <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                 </svg>
                 <svg
-                  className="w-4 h-4 text-yellow-300"
+                  className="h-4 w-4 text-yellow-300"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -77,7 +77,7 @@ const PhotoModal = () => {
                   <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                 </svg>
                 <svg
-                  className="w-4 h-4 text-yellow-300"
+                  className="h-4 w-4 text-yellow-300"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -86,7 +86,7 @@ const PhotoModal = () => {
                   <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                 </svg>
                 <svg
-                  className="w-4 h-4 text-yellow-300"
+                  className="h-4 w-4 text-yellow-300"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -95,7 +95,7 @@ const PhotoModal = () => {
                   <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                 </svg>
                 <svg
-                  className="w-4 h-4 text-gray-300 dark:text-gray-500"
+                  className="h-4 w-4 text-gray-300 dark:text-gray-500"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -117,9 +117,12 @@ const PhotoModal = () => {
             <div>
               <p className="my-3">Size</p>
               <div className="flex flex-row gap-5">
-                {sizeItems.map((item) => {
+                {sizeItems.map((item, index) => {
                   return (
-                    <div className="bg-cream h-8 w-8 flex justify-center items-center rounded">
+                    <div
+                      key={index}
+                      className="flex h-8 w-8 items-center justify-center rounded bg-cream"
+                    >
                       <p> {item}</p>
                     </div>
                   );
@@ -134,7 +137,7 @@ const PhotoModal = () => {
                   return (
                     <div
                       key={index}
-                      className="bg-red h-8 w-8 flex justify-center items-center rounded "
+                      className="bg-red flex h-8 w-8 items-center justify-center rounded "
                     ></div>
                   );
                 })}

@@ -7,19 +7,19 @@ const colorItems = ["red", "blue", "purple"];
 const SingleProduct = () => {
   return (
     <div>
-      <div className="flex flex-row p-5 bg-cream ">
-        <div className="px-5 flex flexx-row gap-x-3 ">
+      <div className="flex flex-row bg-cream p-5 ">
+        <div className="flexx-row flex gap-x-3 px-5 ">
           <p className="text-newGray">Home</p>
           <p>{">"}</p>
           <p className="text-newGray">Shop</p>
           <p>{">"}</p>
-          <div className="px-5 border-l-2 border-newGray"> Product Name</div>
+          <div className="border-l-2 border-newGray px-5"> Product Name</div>
         </div>
       </div>
       <div className="p-10">
-        <div className="flex flex-1  flex-row mt-10 gap-8 px-10">
+        <div className="mt-10 flex  flex-1 flex-row gap-8 px-10">
           <div className="flex flex-col gap-y-5">
-            <div className="relative w-16 h-16 rounded">
+            <div className="relative h-16 w-16 rounded">
               <Image
                 className="rounded"
                 fill
@@ -30,7 +30,7 @@ const SingleProduct = () => {
                 alt={"test"}
               />
             </div>
-            <div className="relative w-16 h-16 rounded">
+            <div className="relative h-16 w-16 rounded">
               <Image
                 className="rounded"
                 fill
@@ -41,7 +41,7 @@ const SingleProduct = () => {
                 alt={"test"}
               />
             </div>
-            <div className="relative w-16 h-16 rounded">
+            <div className="relative h-16 w-16 rounded">
               <Image
                 className="rounded"
                 fill
@@ -53,7 +53,7 @@ const SingleProduct = () => {
               />
             </div>
           </div>
-          <div className="relative w-6/12 h-80 rounded">
+          <div className="relative h-80 w-6/12 rounded">
             <Image
               className="rounded"
               fill
@@ -66,12 +66,12 @@ const SingleProduct = () => {
           </div>
           <div>
             <div className="px-10">
-              <p className="text-2xl my-1">Product Name</p>
-              <p className="text-md text-newGray  my-1"> Rs 25,0000</p>
-              <div className="flex flex-row gap-5 h-8">
-                <div className="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
+              <p className="my-1 text-2xl">Product Name</p>
+              <p className="text-md my-1  text-newGray"> Rs 25,0000</p>
+              <div className="flex h-8 flex-row gap-5">
+                <div className="mb-1 flex items-center space-x-1 rtl:space-x-reverse">
                   <svg
-                    className="w-4 h-4 text-yellow-300"
+                    className="h-4 w-4 text-yellow-300"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -80,7 +80,7 @@ const SingleProduct = () => {
                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                   </svg>
                   <svg
-                    className="w-4 h-4 text-yellow-300"
+                    className="h-4 w-4 text-yellow-300"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -89,7 +89,7 @@ const SingleProduct = () => {
                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                   </svg>
                   <svg
-                    className="w-4 h-4 text-yellow-300"
+                    className="h-4 w-4 text-yellow-300"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -98,7 +98,7 @@ const SingleProduct = () => {
                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                   </svg>
                   <svg
-                    className="w-4 h-4 text-yellow-300"
+                    className="h-4 w-4 text-yellow-300"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -107,7 +107,7 @@ const SingleProduct = () => {
                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                   </svg>
                   <svg
-                    className="w-4 h-4 text-gray-300 dark:text-gray-500"
+                    className="h-4 w-4 text-gray-300 dark:text-gray-500"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -129,9 +129,12 @@ const SingleProduct = () => {
               <div>
                 <p className="my-3">Size</p>
                 <div className="flex flex-row gap-5">
-                  {sizeItems.map((item) => {
+                  {sizeItems.map((item, index) => {
                     return (
-                      <div className="bg-cream h-8 w-8 flex justify-center items-center rounded">
+                      <div
+                        key={index}
+                        className="flex h-8 w-8 items-center justify-center rounded bg-cream"
+                      >
                         <p> {item}</p>
                       </div>
                     );
@@ -146,7 +149,7 @@ const SingleProduct = () => {
                     return (
                       <div
                         key={index}
-                        className="bg-red h-8 w-8 flex justify-center items-center rounded "
+                        className="bg-red flex h-8 w-8 items-center justify-center rounded "
                       ></div>
                     );
                   })}
