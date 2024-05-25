@@ -33,24 +33,24 @@ export const ProfileDropdown = () => {
         data-dropdown-toggle="dropdown"
         data-dropdown-trigger="hover"
         onClick={() => setShowDropDown(true)}
-        className=" focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  "
+        className=" inline-flex items-center rounded-lg px-0 py-2.5 text-center text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-300  "
         type="button"
       >
-        <Image src={Profile} alt="Profile" />
+        <Image src={Profile} alt="Profile" className="w-[40px] sm:w-auto" />
       </button>
 
       <div
         id="dropdown"
         className={`z-10 ${
           showDropDown ? "" : "hidden"
-        } absolute top-12 right-0  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
+        } absolute right-0 top-12  w-44 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700`}
       >
         <ul
           className="py-2 text-sm text-gray-700 dark:text-gray-200"
           aria-labelledby="dropdownDefaultButton"
         >
           <li
-            className="block px-4 py-2 hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-600 dark:hover:text-white"
+            className="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             onClick={() => {
               setShowDropDown(false);
               router.push("/home");
@@ -59,7 +59,7 @@ export const ProfileDropdown = () => {
             Dashboard
           </li>
           <li
-            className="block px-4 py-2 hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-600 dark:hover:text-white"
+            className="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             onClick={() => {
               setShowDropDown(false);
               router.push("/shop");

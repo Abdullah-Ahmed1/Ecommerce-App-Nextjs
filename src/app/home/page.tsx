@@ -104,7 +104,7 @@ const Home = async () => {
 
   return (
     <>
-      <div className="h-screen bg-green-800">
+      <div className="h-screen ">
         <div className="relative flex w-full flex-1">
           <div className="h-[86vh]">
             <Image
@@ -117,7 +117,7 @@ const Home = async () => {
             />
           </div>
 
-          <div className="absolute bottom-40 right-20 bg-cream px-10 py-5">
+          <div className="absolute bottom-40 right-20 ml-[10px] bg-cream px-10 py-5">
             <p className="text-xs font-semibold">New Arrival</p>
             <h3 className="mt-2 text-4xl font-bold text-darkCream">
               Discover Our <br />
@@ -138,7 +138,7 @@ const Home = async () => {
       <div className="z-50 mb-5 mt-10 flex flex-1 flex-col items-center">
         <p className="text-xl font-semibold">Browse The Range</p>
         <p className="text-sm ">Check Our Products </p>
-        <div className="mt-10 flex flex-1 flex-row gap-x-10">
+        <div className="mt-10 flex flex-row flex-wrap justify-center gap-y-[20px] lg:gap-x-10">
           {CategoryItems.map((item, index) => {
             return (
               <div key={index} className="flex flex-col">
@@ -153,7 +153,7 @@ const Home = async () => {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
-                <p className="text-center">{item.name}</p>
+                <p className="mt-2 text-center">{item.name}</p>
               </div>
             );
           })}

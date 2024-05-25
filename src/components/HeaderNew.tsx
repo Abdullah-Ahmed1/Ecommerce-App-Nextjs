@@ -1,13 +1,15 @@
 "use client";
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import React, { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+
 import Heart from "../../public/heart.svg";
 import Search from "../../public/search.svg";
-import Profile from "../../public/profile.svg";
-import ShoppingCart from "../../public/shoppingCart.svg";
+import MenuIcon from "../../public/svgs/menu.svg";
 import { ProfileDropdown } from "./ProfileDropdown";
-import { useRouter, usePathname } from "next/navigation";
+import ShoppingCart from "../../public/shoppingCart.svg";
+import MobileViewHeaderDropdown from "./MobileViewHeaderDropdown";
 
 const Header = () => {
   const router = useRouter();
@@ -38,7 +40,12 @@ const Header = () => {
             router.push("/cart");
           }}
         >
-          <Image priority src={ShoppingCart} alt={"ShoppingCart"} />
+          <Image
+            priority
+            src={ShoppingCart}
+            alt={"ShoppingCart"}
+            className="w-[40px] fill-darkCream sm:w-auto"
+          />
         </button>
       ),
     },
@@ -46,7 +53,12 @@ const Header = () => {
       name: "Search",
       icon: (
         <button>
-          <Image priority src={Search} alt={"Search"} />
+          <Image
+            priority
+            src={Search}
+            alt={"Search"}
+            className="w-[40px] sm:w-auto"
+          />
         </button>
       ),
     },
@@ -58,7 +70,12 @@ const Header = () => {
             router.push("/favourites");
           }}
         >
-          <Image priority src={Heart} alt={"Heart"} />
+          <Image
+            priority
+            src={Heart}
+            alt={"Heart"}
+            className="w-[40px] sm:w-auto"
+          />
         </button>
       ),
     },
@@ -71,37 +88,55 @@ const Header = () => {
       ),
     },
   ];
+
+  const [showDropdown, setShowDropdown] = useState(false);
   return (
-    <div className="flex flex-row px-16 py-5 sm:bg-gray-500 md:bg-gray-300 lg:bg-white">
-      <div className="flex flex-1 flex-row items-center justify-between">
-        <div>Logo</div>
-        <div>
-          <ul className="hidden md:flex  md:gap-x-8  lg:gap-x-16 ">
-            {MenuItems.map((item, index) => {
-              return (
-                <li
-                  className="inline cursor-pointer hover:text-cream"
-                  key={index}
-                >
-                  <Link href={item.link}>{item.name}</Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div>
-          <ul className="flex gap-x-5">
-            {IconItems.map((item, index) => {
-              return (
-                <div key={index} className="flex content-center">
-                  {item.icon}
-                </div>
-              );
-            })}
-          </ul>
+    <>
+      {showDropdown && (
+        <MobileViewHeaderDropdown
+          IconItems={IconItems}
+          MenuItems={MenuItems}
+          setShowDropdown={setShowDropdown}
+        />
+      )}
+
+      <div className="flex flex-row px-16 py-5  lg:bg-white">
+        <div className="flex flex-1 flex-row items-center justify-between">
+          <div>Logo</div>
+          <div>
+            <ul className="hidden md:flex  md:gap-x-8  lg:gap-x-16 ">
+              {MenuItems.map((item, index) => {
+                return (
+                  <li
+                    className="inline cursor-pointer hover:text-cream"
+                    key={index}
+                  >
+                    <Link href={item.link}>{item.name}</Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div>
+            <ul className="hidden gap-x-5 md:flex">
+              {IconItems.map((item, index) => {
+                return (
+                  <div key={index} className="flex content-center">
+                    {item.icon}
+                  </div>
+                );
+              })}
+            </ul>
+          </div>
+          <div
+            onClick={() => setShowDropdown(true)}
+            className=" flex cursor-pointer md:hidden "
+          >
+            <Image src={MenuIcon} alt="Menu Icon" />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
