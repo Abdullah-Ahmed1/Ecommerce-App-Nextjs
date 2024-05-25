@@ -105,7 +105,7 @@ const Home = async () => {
   return (
     <>
       <div className="h-screen bg-green-800">
-        <div className="relative flex w-full flex-1  bg-red-500">
+        <div className="relative flex w-full flex-1">
           <div className="h-[86vh]">
             <Image
               fill

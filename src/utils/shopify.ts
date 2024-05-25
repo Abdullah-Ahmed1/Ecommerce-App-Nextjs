@@ -1,9 +1,12 @@
 import { GraphQLClient } from "graphql-request";
 
 const shopify = async (query: any, variables: any) => {
+  const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  const domain = process.env.SHOPIFY_STORE_DOMAIN;
+  if (!token || !domain) return;
   const headers = new Headers();
-  headers.set("X-Shopify-Storefront-Access-Token", process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || "331f51625b72f4a66c255aae60185c6e");
-  const graphQLClient = new GraphQLClient("https://bessersol.myshopify.com/api/2024-01/graphql.json", {
+  headers.set("X-Shopify-Storefront-Access-Token", token);
+  const graphQLClient = new GraphQLClient(domain, {
     headers,
   });
   return await graphQLClient.request(query, variables);
