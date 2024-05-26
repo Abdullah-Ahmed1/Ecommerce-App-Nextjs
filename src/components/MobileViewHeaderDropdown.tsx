@@ -1,7 +1,9 @@
-import React, { Dispatch, SetStateAction } from "react";
-import Image from "next/image";
-import CloseIcon from "../../public/svgs/close.svg";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import React, { Dispatch, SetStateAction } from "react";
+
+import CloseIcon from "../../public/svgs/close.svg";
 
 interface IconItem {
   name: string;
@@ -22,6 +24,13 @@ const MobileViewHeaderDropdown: React.FC<IMobileViewHeaderDropdown> = ({
   MenuItems,
   setShowDropdown,
 }) => {
+  const router = useRouter();
+
+  const handleLinkClick = (link: string) => {
+    router.push(link);
+    setShowDropdown(false);
+  };
+
   return (
     <div className="absolute left-0 top-0 z-[100] flex h-screen w-screen flex-col bg-white">
       <div className="flex flex-row justify-between bg-white px-[64px] py-[20px]">
@@ -46,9 +55,12 @@ const MobileViewHeaderDropdown: React.FC<IMobileViewHeaderDropdown> = ({
             className=" flex w-full cursor-pointer flex-col items-center hover:bg-cream hover:text-darkCream"
             key={index}
           >
-            <Link href={item.link} className="text-[20px]">
+            <div
+              onClick={() => handleLinkClick(item.link)}
+              className="text-[20px]"
+            >
               {item.name}
-            </Link>
+            </div>
           </li>
         ))}
       </ul>
