@@ -2,8 +2,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
-
 import Toast from "@/components/Toast";
+import { useRouter } from "next/navigation";
 
 interface ILoginForm {
   handleSubmit: (
@@ -12,23 +12,35 @@ interface ILoginForm {
 }
 
 const LoginForm: React.FC<ILoginForm> = ({ handleSubmit }) => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [statusCode, setStatusCode] = useState<number | null>(null);
+  const [toastMessage, setShowToastMessage] = useState("");
   const handleFormSubmit = async (event: any) => {
     setLoading(true);
     const result = await handleSubmit(event);
+    if (result?.status == 500) {
+      setShowToastMessage("Unidentified User");
+    } else {
+      router.push("/shop");
+    }
+    setShowToast(true);
+
     setLoading(false);
   };
   return (
     <>
-      <Toast
-        show={showToast}
-        setShowToast={setShowToast}
-        autoClose={true}
-        statusCode={statusCode}
-        message="This is the test message"
-      />
+      {toastMessage && (
+        <Toast
+          show={showToast}
+          setShowToast={setShowToast}
+          autoClose={true}
+          statusCode={statusCode}
+          message={toastMessage}
+        />
+      )}
+
       <main className="h bg-white-800 flex  h-screen flex-row  items-center justify-center">
         <div className=" h-96 w-3/6">
           <div className="flex flex-col items-center  ">

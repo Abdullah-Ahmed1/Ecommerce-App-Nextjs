@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { Dispatch, SetStateAction } from "react";
 
 import CloseIcon from "../../public/svgs/close.svg";

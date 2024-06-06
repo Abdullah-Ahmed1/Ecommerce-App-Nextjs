@@ -64,6 +64,10 @@ const LoginPage = () => {
         "token",
         result.customerAccessTokenCreate.customerAccessToken.accesToken,
       );
+      return {
+        status: 200,
+        message: "User Created Successfully",
+      };
     } catch (error) {
       console.log("Error:", error);
     }

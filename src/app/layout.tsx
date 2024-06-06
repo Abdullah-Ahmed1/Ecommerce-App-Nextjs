@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} "testing"`}>
+      <body className={`${inter.className}`}>
         <main className="flex h-full w-full flex-col overflow-auto">
           <GoogleTagManager gtmId="GTM-TJG8XG78" />
           {/* <Header /> */}
