@@ -1,12 +1,10 @@
 "use client";
-
 import Image from "next/image";
-import React, { FC, MouseEventHandler, useRef } from "react";
+import React, { useRef } from "react";
 import Share from "../../public/share.svg";
 import Heart from "../../public/heart.svg";
 import Compare from "../../public/compare.svg";
 import AddToCartButton from "./AddToCartButton";
-import { IProductItem } from "@/types/GlobalTypes";
 import { useRouter } from "next/navigation";
 
 const ProductItem = ({ item }: any) => {
@@ -16,7 +14,9 @@ const ProductItem = ({ item }: any) => {
     if (AddToCartRef.current?.contains(event.target as HTMLElement)) {
       return;
     } else {
-      router.push("/shop/12");
+      router.push(
+        `/shop/${item.node.id.split("/")[item.node.id.split("/").length - 1]}`,
+      );
       event.stopPropagation();
     }
   };
@@ -33,7 +33,7 @@ const ProductItem = ({ item }: any) => {
               quality={100}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority
-              src={"/images/livingArea.jpeg"}
+              src={item.node.featuredImage.url}
               alt={"test"}
             />
           </div>
