@@ -160,7 +160,7 @@ const Home = async () => {
         </div>
         <div className="mt-14 flex flex-col">
           <p className="text-center text-xl font-semibold">Our Products</p>
-          <div className="mt-10 flex flex-1 flex-row flex-wrap justify-center gap-8 px-40">
+          <div className="mt-10 flex flex-row flex-wrap items-center justify-center gap-8">
             {data?.products?.edges.map((item: any, index) => {
               return <ProductItem key={index} item={item} />;
             })}
