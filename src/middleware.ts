@@ -4,7 +4,14 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const getToken = cookies().get("token");
-  if (getToken) return NextResponse.next();
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-url", request.url);
+  if (getToken)
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
   return NextResponse.redirect(new URL("/home", request.url));
 }
 export const config = {

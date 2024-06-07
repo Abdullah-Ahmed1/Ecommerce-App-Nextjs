@@ -3,16 +3,17 @@ import React, { FC, ForwardedRef, forwardRef } from "react";
 import { IProductItem } from "@/types/GlobalTypes";
 import { sendGTMEvent } from "@next/third-parties/google";
 
-const AddToCartButton = forwardRef(({ item, props, ref }: any) => {
+const AddToCartButton = forwardRef(({ props, customRef }: any) => {
+  const handleAddToCart = () => {};
   return (
     <button
+      ref={customRef}
       id="test1"
       onClick={(event) => {
         alert("hello");
         sendGTMEvent({
           event: "buttonClickedyes",
           id: "test",
-          productName: item.name,
         });
         event.stopPropagation();
       }}
