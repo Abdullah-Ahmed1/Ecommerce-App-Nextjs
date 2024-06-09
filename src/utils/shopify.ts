@@ -1,5 +1,3 @@
-import { GraphQLClient } from "graphql-request";
-
 const shopify = async (query: any, variables: any) => {
   const token =
     process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ??
@@ -8,12 +6,26 @@ const shopify = async (query: any, variables: any) => {
     process.env.SHOPIFY_STORE_DOMAIN ??
     process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
   if (!token || !domain) return;
+
   const headers = new Headers();
+  headers.set("Content-Type", "application/json");
   headers.set("X-Shopify-Storefront-Access-Token", token);
-  const graphQLClient = new GraphQLClient(domain, {
-    headers,
+
+  const response = await fetch(domain, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      query: query,
+      variables: variables,
+    }),
   });
 
-  return await graphQLClient.request(query, variables);
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status} ${response.statusText}`);
+  }
+
+  const result = await response.json();
+  return result.data;
 };
+
 export default shopify;

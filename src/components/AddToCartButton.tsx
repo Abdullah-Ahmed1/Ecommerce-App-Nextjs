@@ -1,16 +1,13 @@
 "use client";
 import React, { FC, ForwardedRef, forwardRef } from "react";
-import { IProductItem } from "@/types/GlobalTypes";
 import { sendGTMEvent } from "@next/third-parties/google";
 
-const AddToCartButton = forwardRef(({ props, customRef }: any) => {
-  const handleAddToCart = () => {};
+const AddToCartButton = forwardRef((props, ref: any) => {
   return (
     <button
-      ref={customRef}
+      ref={ref}
       id="test1"
       onClick={(event) => {
-        alert("hello");
         sendGTMEvent({
           event: "buttonClickedyes",
           id: "test",

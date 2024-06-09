@@ -3,9 +3,9 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import Share from "../../public/share.svg";
 import Heart from "../../public/heart.svg";
+import { useRouter } from "next/navigation";
 import Compare from "../../public/compare.svg";
 import AddToCartButton from "./AddToCartButton";
-import { useRouter } from "next/navigation";
 
 const ProductItem = ({ item }: any) => {
   const router = useRouter();
@@ -49,7 +49,7 @@ const ProductItem = ({ item }: any) => {
           </div>
         </div>
         <div className="absolute top-0 flex h-full w-full flex-col items-center justify-center bg-stone-500 bg-opacity-60 opacity-0 transition duration-300 hover:opacity-100">
-          <AddToCartButton ref={AddToCartRef} item={item} />
+          <AddToCartButton ref={AddToCartRef} />
           <div className="mt-5 flex flex-row gap-4">
             <div className="flex flex-row items-center justify-center gap-1">
               <Image
