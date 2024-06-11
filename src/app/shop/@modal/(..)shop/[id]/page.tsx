@@ -6,6 +6,7 @@ import shopify from "../../../../../utils/shopify";
 import { useRouter } from "next/navigation";
 import LeftIcon from "../../../../../../public/left.svg";
 import RightIcon from "../../../../../../public/right.svg";
+import Full from "../../../../../../public/svgs/full.svg";
 
 const sizeItems = ["L", "XL", "XS"];
 const colorItems = ["red", "blue", "purple"];
@@ -65,35 +66,57 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
     >
       <div
         onClick={stopPropgation}
-        className=" flex h-3/4 w-4/5 items-center rounded bg-white p-5  opacity-100"
+        className=" relative flex h-3/4 w-4/5 items-center rounded bg-white  p-5 opacity-100"
       >
+        <button
+          className="absolute right-0 top-0 mr-4 mt-4"
+          aria-label="Open in full"
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          <Image src={Full} alt="open in full" />
+        </button>
         {product && (
           <div className="  flex h-full w-full flex-row items-center gap-x-10">
-            <div className="relative h-full w-96 rounded">
-              <div className="relative w-96 rounded" style={{ height: "92%" }}>
-                <Image
-                  className="rounded"
-                  fill
-                  quality={100}
-                  sizes="(max-width: 800px) 100vw, (max-width: 1290px) 50vw, 33vw"
-                  priority
-                  src={product.images?.edges[0].node.url}
-                  alt={"test"}
-                />
+            <div className="relative flex h-full w-full flex-row items-center justify-center rounded">
+              <div className="flex flex-col gap-y-6">
+                {product.images.edges.map((item: any) => {
+                  return (
+                    <Image
+                      width={200}
+                      height={200}
+                      src={item.node.url}
+                      alt="test"
+                    />
+                  );
+                })}
               </div>
-              <div className="flex w-full justify-center p-5 ">
-                <Image
-                  priority
-                  src={LeftIcon}
-                  alt={"Left Icon"}
-                  className=" cursor-pointer"
-                />
-                <Image
-                  priority
-                  src={RightIcon}
-                  alt={"Right Icon"}
-                  className="cursor-pointer"
-                />
+              <div className="flex flex-col items-center justify-between ">
+                <div>
+                  <Image
+                    className="rounded"
+                    sizes="(max-width: 800px) 100vw, (max-width: 1290px) 50vw, 33vw"
+                    width={800}
+                    height={800}
+                    src={product.images?.edges[0].node.url}
+                    alt={"test"}
+                  />
+                </div>
+                <div className="flex w-full justify-center p-5 ">
+                  <Image
+                    priority
+                    src={LeftIcon}
+                    alt={"Left Icon"}
+                    className=" cursor-pointer"
+                  />
+                  <Image
+                    priority
+                    src={RightIcon}
+                    alt={"Right Icon"}
+                    className="cursor-pointer"
+                  />
+                </div>
               </div>
             </div>
             <div className="px-10">

@@ -3,6 +3,7 @@ import Image from "next/image";
 import shopify from "@/utils/shopify";
 import { gql } from "graphql-request";
 import twColors from "tailwindcss/colors";
+import ImageComponent from "./ImageComponent";
 
 interface IParams {
   params: {
@@ -62,32 +63,7 @@ const SingleProduct: React.FC<IParams> = async ({ params }) => {
       </div>
       <div className="p-10">
         <div className="mt-10 flex  flex-1 flex-row gap-8 px-10">
-          <div className="flex flex-col gap-y-5">
-            {data.product.images.edges.map((item: any, index: number) => (
-              <div key={index} className="relative h-16 w-16 rounded">
-                <Image
-                  className="rounded"
-                  fill
-                  quality={100}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority
-                  src={item.node.url}
-                  alt={"test"}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="relative h-80 w-6/12 rounded">
-            <Image
-              className="rounded"
-              fill
-              quality={100}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority
-              src={data.product.images.edges[0].node.url}
-              alt={"test"}
-            />
-          </div>
+          <ImageComponent data={data} />
           <div>
             <div className="px-10">
               <p className="my-1 text-2xl">{data.product.title}</p>
