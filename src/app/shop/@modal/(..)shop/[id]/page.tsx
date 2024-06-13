@@ -103,20 +103,6 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
                     alt={"test"}
                   />
                 </div>
-                <div className="flex w-full justify-center p-5 ">
-                  <Image
-                    priority
-                    src={LeftIcon}
-                    alt={"Left Icon"}
-                    className=" cursor-pointer"
-                  />
-                  <Image
-                    priority
-                    src={RightIcon}
-                    alt={"Right Icon"}
-                    className="cursor-pointer"
-                  />
-                </div>
               </div>
             </div>
             <div className="px-10">
