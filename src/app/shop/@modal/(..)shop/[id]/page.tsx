@@ -1,11 +1,10 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
 import { gql } from "graphql-request";
-import shopify from "../../../../../utils/shopify";
 import { useRouter } from "next/navigation";
-import LeftIcon from "../../../../../../public/left.svg";
-import RightIcon from "../../../../../../public/right.svg";
+import React, { useEffect, useState } from "react";
+
+import shopify from "../../../../../utils/shopify";
 import Full from "../../../../../../public/svgs/full.svg";
 
 const sizeItems = ["L", "XL", "XS"];
@@ -19,6 +18,7 @@ interface IParams {
 const PhotoModal: React.FC<IParams> = ({ params }) => {
   const router = useRouter();
   const [product, setProduct] = useState<any>(null);
+  const [currentFeatured, setCurrentFeatured] = useState<any>(null);
 
   const handleRequest = async () => {
     const query = gql`
@@ -49,6 +49,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
   useEffect(() => {
     handleRequest().then((response) => {
       setProduct(response.product);
+      setCurrentFeatured(response.product.images.edges[0].node);
     });
   }, []);
 
@@ -77,14 +78,16 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
         >
           <Image src={Full} alt="open in full" />
         </button>
-        {product && (
-          <div className="  flex h-full w-full flex-row items-center gap-x-10">
+        {product && currentFeatured && (
+          <div className="flex h-full w-full flex-row items-center gap-x-10">
             <div className="relative flex h-full w-full flex-row items-center justify-center rounded">
               <div className="flex flex-col gap-y-6">
                 {product.images.edges.map((item: any) => {
                   return (
                     <Image
+                      onClick={() => setCurrentFeatured(item.node)}
                       width={200}
+                      className="cursor-pointer"
                       height={200}
                       src={item.node.url}
                       alt="test"
@@ -99,7 +102,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
                     sizes="(max-width: 800px) 100vw, (max-width: 1290px) 50vw, 33vw"
                     width={800}
                     height={800}
-                    src={product.images?.edges[0].node.url}
+                    src={currentFeatured?.url}
                     alt={"test"}
                   />
                 </div>
