@@ -37,7 +37,7 @@ const Header = () => {
       icon: (
         <button
           onClick={() => {
-            router.push("/cart");
+            router.push("/cart", { scroll: false });
           }}
         >
           <Image

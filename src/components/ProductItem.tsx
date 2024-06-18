@@ -16,6 +16,7 @@ const ProductItem = ({ item }: any) => {
     } else {
       router.push(
         `/shop/${item.node.id.split("/")[item.node.id.split("/").length - 1]}`,
+        { scroll: false },
       );
       event.stopPropagation();
     }
