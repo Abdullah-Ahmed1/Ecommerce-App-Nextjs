@@ -61,7 +61,15 @@ const CheckoutModal = () => {
                   <p>{item.Price} + Rs</p>
                 </div>
               </div>
-              <Image src={Cross} alt="cross" />
+              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-[50%] bg-gray-500 ">
+                <Image
+                  src={Cross}
+                  alt="cross"
+                  width={14}
+                  height={14}
+                  className="invert filter"
+                />
+              </div>
             </div>
           ))}
         </div>
