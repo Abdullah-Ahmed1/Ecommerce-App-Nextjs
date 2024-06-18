@@ -25,7 +25,7 @@ export default function RootLayout({
           <GoogleTagManager gtmId="GTM-TJG8XG78" />
           {/* <Header /> */}
           <HeaderNew />
-          {children}
+          <div className="mt-[80px]">{children}</div>
           <Footer />
         </main>
       </body>

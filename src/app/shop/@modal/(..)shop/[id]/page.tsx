@@ -63,7 +63,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
   return (
     <div
       onClick={handleBack}
-      className="fixed top-0 flex h-[100dvh] w-screen items-center justify-center overflow-y-auto bg-gray-700  bg-opacity-50"
+      className="fixed top-0 z-[900] flex h-[100dvh] w-screen items-center justify-center overflow-y-auto bg-gray-700  bg-opacity-50"
     >
       <div
         onClick={stopPropgation}

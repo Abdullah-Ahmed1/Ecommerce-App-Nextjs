@@ -91,7 +91,7 @@ const Header = () => {
 
   const [showDropdown, setShowDropdown] = useState(false);
   return (
-    <>
+    <div className="fixed top-0 z-[500]  w-full bg-white">
       {showDropdown && (
         <MobileViewHeaderDropdown
           IconItems={IconItems}
@@ -136,7 +136,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
