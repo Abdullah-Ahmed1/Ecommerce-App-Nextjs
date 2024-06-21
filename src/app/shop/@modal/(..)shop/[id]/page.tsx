@@ -119,8 +119,6 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
     const cart = localStorage.getItem("cart");
     const cartData = cart && JSON.parse(cart);
 
-    // localStorage.setItem("cart", JSON.stringify(response.cartCreate.cart));
-    // console.debug("create cart response", response);
     if (cart) {
       const variables = {
         cartId: JSON.parse(cart)?.id,
