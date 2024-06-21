@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Cross from "../../../public/svgs/close.svg";
 import Dummy from "../../../public/images/dinning.jpeg";
+import shopify from "@/utils/shopify";
 
 const CartItems = [
   {
@@ -22,8 +23,72 @@ const CartItems = [
   },
 ];
 
+const getCartQuery = `
+query getCart($cartId: ID!) {
+  cart(id: $cartId) {
+    id
+    createdAt
+    updatedAt
+    lines(first: 10) {
+      edges {
+        node {
+          id
+          quantity
+          merchandise {
+            ... on ProductVariant {
+              id
+              title
+              product {
+                title
+                handle
+                images(first:12){
+                  edges{
+                    node{
+                      url
+                      id
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    cost {
+      totalAmount {
+        amount
+        currencyCode
+      }
+      subtotalAmount {
+        amount
+        currencyCode
+      }
+      totalTaxAmount {
+        amount
+        currencyCode
+      }
+    }
+  }
+}
+`;
+
 const CartModal = () => {
   const router = useRouter();
+  const [cartData, setCartData] = useState<any>(null);
+  const cart = localStorage.getItem("cart");
+
+  const variables = {
+    cartId: (cart && JSON.parse(cart)?.id) || null,
+  };
+
+  useEffect(() => {
+    shopify(getCartQuery, variables).then((response) => {
+      console.debug("response is:", response.cart);
+      setCartData(response.cart);
+    });
+  }, []);
+
   const handleBack = () => {
     router.back();
   };
@@ -52,7 +117,42 @@ const CartModal = () => {
         </div>
         <div className="mt-4 flex h-full flex-col justify-between  pb-4">
           <div className="flex flex-col gap-y-[10px]">
-            {CartItems.map((item) => (
+            {cartData ? (
+              cartData?.lines.edges.map((item: any) => (
+                <div className="flex  flex-row items-center justify-between">
+                  <div className="flex w-full flex-row items-center gap-x-8 ">
+                    <Image
+                      src={
+                        item.node.merchandise.product.images.edges[0].node.url
+                      }
+                      alt="image"
+                      width={50}
+                      height={50}
+                    />
+                    <div className="flex flex-col">
+                      <p>{item.node.merchandise.product.title}</p>
+                      <div className="flex flex-row">
+                        <p>1 x</p>
+                        <p>{item.Price} + Rs</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex h-[20px] w-[20px] items-center justify-center rounded-[50%] bg-gray-500 ">
+                    <Image
+                      src={Cross}
+                      alt="cross"
+                      width={14}
+                      height={14}
+                      className="cursor-pointer invert filter"
+                    />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <h2>nothing to show</h2>
+            )}
+            {/* {CartItems.map((item) => (
               <div className="flex  flex-row items-center justify-between">
                 <div className="flex w-full flex-row items-center gap-x-8 ">
                   <Image src={Dummy} alt="image" width={50} height={50} />
@@ -75,7 +175,7 @@ const CartModal = () => {
                   />
                 </div>
               </div>
-            ))}
+            ))} */}
           </div>
           <section className="flex w-1/2 flex-row justify-between">
             <p>Subtotal</p>

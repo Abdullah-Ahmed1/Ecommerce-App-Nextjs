@@ -36,6 +36,7 @@ const Header = () => {
       name: "ShoppingCart",
       icon: (
         <button
+          className="relative"
           onClick={() => {
             router.push("/cart", { scroll: false });
           }}
@@ -46,6 +47,9 @@ const Header = () => {
             alt={"ShoppingCart"}
             className="w-[40px] fill-darkCream sm:w-auto"
           />
+          <div className="absolute right-[-5px] top-0 flex h-[15px] w-[15px] items-center justify-center rounded-[50%] bg-red-600 p-2 text-[10px] text-white">
+            1
+          </div>
         </button>
       ),
     },

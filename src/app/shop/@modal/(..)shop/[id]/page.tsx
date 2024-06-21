@@ -3,6 +3,7 @@ import Image from "next/image";
 import { gql } from "graphql-request";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import twColors from "tailwindcss/colors";
 
 import shopify from "../../../../../utils/shopify";
 import Full from "../../../../../../public/svgs/full.svg";
@@ -15,10 +16,194 @@ interface IParams {
     id: string;
   };
 }
+const createCartQuery = `
+mutation CART_CREATE{
+  cartCreate{
+    cart{
+      checkoutUrl
+      id
+    }
+  }
+}
+`;
+
+const addToCartQuery = `
+mutation AddToCart($cartId: ID!, $merchandiseId: ID!, $quantity: Int!) {
+  cartLinesAdd(cartId: $cartId, lines: [{ merchandiseId: $merchandiseId, quantity: $quantity }]) {
+    cart {
+      id
+      lines(first: 10) {
+        edges {
+          node {
+            id
+            quantity
+            merchandise {
+              ... on ProductVariant {
+                id
+                title
+                price {
+                  amount
+                  currencyCode
+                }
+              }
+            }
+          }
+        }
+      }
+      cost {
+        totalAmount {
+          amount
+          currencyCode
+        }
+        subtotalAmount {
+          amount
+          currencyCode
+        }
+        totalTaxAmount {
+          amount
+          currencyCode
+        }
+      }
+    }
+  }
+}
+`;
+
+const getCartQuery = `
+query getCart($cartId: ID!) {
+  cart(id: $cartId) {
+    id
+    createdAt
+    updatedAt
+    lines(first: 10) {
+      edges {
+        node {
+          id
+          quantity
+          merchandise {
+            ... on ProductVariant {
+              id
+              title
+              product {
+                title
+                handle
+              }
+            }
+          }
+        }
+      }
+    }
+    cost {
+      totalAmount {
+        amount
+        currencyCode
+      }
+      subtotalAmount {
+        amount
+        currencyCode
+      }
+      totalTaxAmount {
+        amount
+        currencyCode
+      }
+    }
+  }
+}
+`;
 const PhotoModal: React.FC<IParams> = ({ params }) => {
   const router = useRouter();
   const [product, setProduct] = useState<any>(null);
   const [currentFeatured, setCurrentFeatured] = useState<any>(null);
+
+  const handleAddToCart = async () => {
+    const cart = localStorage.getItem("cart");
+    const cartData = cart && JSON.parse(cart);
+
+    // localStorage.setItem("cart", JSON.stringify(response.cartCreate.cart));
+    // console.debug("create cart response", response);
+    if (cart) {
+      const variables = {
+        cartId: JSON.parse(cart)?.id,
+      };
+      // alert(variables.cartId);
+      const responseGetCart = await shopify(getCartQuery, variables);
+      // alert(JSON.stringify(responseGetCart.cart));
+      if (responseGetCart.cart) {
+        alert(product.id);
+        const addToCartVaraibles = {
+          cartId: responseGetCart.cart.id,
+          quantity: 1,
+          merchandiseId: product.variants.edges[0].node.id,
+        };
+        try {
+          const addToCartResponse = await shopify(
+            addToCartQuery,
+            addToCartVaraibles,
+          );
+          alert(JSON.stringify(addToCartResponse));
+          const getCartResponse = await shopify(getCartQuery, {
+            cartId: addToCartResponse.cartLinesAdd.cart.id,
+          });
+          alert(getCartResponse);
+          localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
+
+          console.debug("add to cart", addToCartResponse);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        // here add cart again
+        const response = await shopify(createCartQuery, null);
+        console.debug("created cart data: ", response.cart);
+        localStorage.setItem("cart", JSON.stringify(response.data.cartCreate));
+        const addToCartVaraibles = {
+          cartId: response.data.cartCreate.cart.id,
+          quantity: 1,
+          merchandiseId: product.id,
+        };
+        try {
+          const addToCartResponse = await shopify(
+            addToCartQuery,
+            addToCartVaraibles,
+          );
+
+          const getCartResponse = await shopify(getCartQuery, {
+            cartId: addToCartResponse.data.cartLinesAddcart.id,
+          });
+
+          localStorage.setItem("cart", getCartResponse.data.cart);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    } else {
+      // add cart , store that cart into localstorage, add item to it , then get the cart
+      const response = await shopify(createCartQuery, null);
+      // console.debug("created cart data: ", response.cart);
+      // localStorage.setItem("cart", JSON.stringify(response.cartCreate.cart));
+      const addToCartVaraibles = {
+        cartId: response.cartCreate.cart.id,
+        quantity: 1,
+        merchandiseId: product.id,
+      };
+      try {
+        const addToCartResponse = await shopify(
+          addToCartQuery,
+          addToCartVaraibles,
+        );
+
+        const getCartResponse = await shopify(getCartQuery, null);
+        localStorage.setItem("cart", getCartResponse.cart);
+      } catch (err) {
+        console.log(err);
+      }
+      // check the cartid in the localstorage, if it exists get the cart and the add item to that cart,
+      //otherwise create new cart , store cart id to localstorage and add item to it and get the cart to show
+
+      //add item to cart
+      // show toast that item is added to the cart
+    }
+  };
 
   const handleRequest = async () => {
     const query = gql`
@@ -26,7 +211,13 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
       product(id: "gid://shopify/Product/${params.id}") {
         id
         title
-
+			  variants(first:20){
+          edges{
+            node{
+              id
+            }
+          }
+        }
         featuredImage {
           url
           id
@@ -191,14 +382,24 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
                   {colorItems.map((item, index) => {
                     return (
                       <div
+                        style={{
+                          backgroundColor:
+                            twColors[item as keyof typeof twColors]["700"],
+                        }}
                         key={index}
-                        className="bg-red flex h-8 w-8 items-center justify-center rounded "
+                        className="bg-red flex h-8 w-8 items-center justify-center rounded"
                       ></div>
                     );
                   })}
                   <div></div>
                 </div>
               </div>
+              <button
+                onClick={handleAddToCart}
+                className="mt-4 cursor-pointer rounded border-[1px] border-gray-400 p-2"
+              >
+                Add to Cart
+              </button>
             </div>
           </div>
         )}
