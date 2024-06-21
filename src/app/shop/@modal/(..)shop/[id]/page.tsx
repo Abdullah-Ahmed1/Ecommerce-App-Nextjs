@@ -125,11 +125,8 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
       const variables = {
         cartId: JSON.parse(cart)?.id,
       };
-      // alert(variables.cartId);
       const responseGetCart = await shopify(getCartQuery, variables);
-      // alert(JSON.stringify(responseGetCart.cart));
       if (responseGetCart.cart) {
-        alert(product.id);
         const addToCartVaraibles = {
           cartId: responseGetCart.cart.id,
           quantity: 1,
@@ -140,11 +137,9 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
             addToCartQuery,
             addToCartVaraibles,
           );
-          alert(JSON.stringify(addToCartResponse));
           const getCartResponse = await shopify(getCartQuery, {
             cartId: addToCartResponse.cartLinesAdd.cart.id,
           });
-          alert(getCartResponse);
           localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
 
           console.debug("add to cart", addToCartResponse);
@@ -159,7 +154,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
         const addToCartVaraibles = {
           cartId: response.data.cartCreate.cart.id,
           quantity: 1,
-          merchandiseId: product.id,
+          merchandiseId: product.variants.edges[0].node.id,
         };
         try {
           const addToCartResponse = await shopify(
@@ -171,20 +166,18 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
             cartId: addToCartResponse.data.cartLinesAddcart.id,
           });
 
-          localStorage.setItem("cart", getCartResponse.data.cart);
+          localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
         } catch (err) {
           console.log(err);
         }
       }
     } else {
-      // add cart , store that cart into localstorage, add item to it , then get the cart
       const response = await shopify(createCartQuery, null);
-      // console.debug("created cart data: ", response.cart);
-      // localStorage.setItem("cart", JSON.stringify(response.cartCreate.cart));
+
       const addToCartVaraibles = {
         cartId: response.cartCreate.cart.id,
         quantity: 1,
-        merchandiseId: product.id,
+        merchandiseId: product.variants.edges[0].node.id,
       };
       try {
         const addToCartResponse = await shopify(
@@ -192,16 +185,13 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
           addToCartVaraibles,
         );
 
-        const getCartResponse = await shopify(getCartQuery, null);
-        localStorage.setItem("cart", getCartResponse.cart);
+        const getCartResponse = await shopify(getCartQuery, {
+          cartId: response.cartCreate.cart.id,
+        });
+        localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
       } catch (err) {
         console.log(err);
       }
-      // check the cartid in the localstorage, if it exists get the cart and the add item to that cart,
-      //otherwise create new cart , store cart id to localstorage and add item to it and get the cart to show
-
-      //add item to cart
-      // show toast that item is added to the cart
     }
   };
 
