@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
+import shopify from "@/utils/shopify";
 import Heart from "../../public/heart.svg";
 import Search from "../../public/search.svg";
 import MenuIcon from "../../public/svgs/menu.svg";
@@ -11,8 +12,62 @@ import { ProfileDropdown } from "./ProfileDropdown";
 import ShoppingCart from "../../public/shoppingCart.svg";
 import MobileViewHeaderDropdown from "./MobileViewHeaderDropdown";
 
+const getCartQuery = `
+query getCart($cartId: ID!) {
+  cart(id: $cartId) {
+    id
+    createdAt
+    updatedAt
+    lines(first: 10) {
+      edges {
+        node {
+          id
+          quantity
+          merchandise {
+            ... on ProductVariant {
+              id
+              title
+              product {
+                title
+                handle
+                images(first:12){
+                  edges{
+                    node{
+                      url
+                      id
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    cost {
+      totalAmount {
+        amount
+        currencyCode
+      }
+      subtotalAmount {
+        amount
+        currencyCode
+      }
+      totalTaxAmount {
+        amount
+        currencyCode
+      }
+    }
+  }
+}
+`;
+
 const Header = () => {
   const router = useRouter();
+  const cart = localStorage.getItem("cart");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [cartItems, setCartItems] = useState(null);
+
   const MenuItems = [
     {
       name: "Home",
@@ -47,9 +102,11 @@ const Header = () => {
             alt={"ShoppingCart"}
             className="w-[40px] fill-darkCream sm:w-auto"
           />
-          <div className="absolute right-[-5px] top-0 flex h-[15px] w-[15px] items-center justify-center rounded-[50%] bg-red-600 p-2 text-[10px] text-white">
-            1
-          </div>
+          {cartItems && (
+            <div className="absolute right-[-5px] top-0 flex h-[15px] w-[15px] items-center justify-center rounded-[50%] bg-red-600 p-2 text-[10px] text-white">
+              {cartItems}
+            </div>
+          )}
         </button>
       ),
     },
@@ -93,7 +150,16 @@ const Header = () => {
     },
   ];
 
-  const [showDropdown, setShowDropdown] = useState(false);
+  useEffect(() => {
+    if (!cart) return;
+    const variables = {
+      cartId: JSON.parse(cart).id,
+    };
+    shopify(getCartQuery, variables).then((response) => {
+      setCartItems(response.cart.lines.edges.length);
+    });
+  }, []);
+
   return (
     <div className="fixed top-0 z-[500]  w-full bg-white">
       {showDropdown && (
