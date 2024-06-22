@@ -1,8 +1,8 @@
 import React from "react";
 import LoginForm from "./form";
 import shopify from "@/utils/shopify";
-import { gql } from "graphql-request";
 import { cookies } from "next/headers";
+import { cusomterAccessTokenCreateMutation } from "@/graphql/mutations/customerAccessTokenCreate";
 
 interface customerUserError {
   code: string;
@@ -29,26 +29,10 @@ const LoginPage = () => {
         password: event.get("password"),
       },
     };
-    const query = gql`
-      mutation customerAccessTokenCreate(
-        $input: CustomerAccessTokenCreateInput!
-      ) {
-        customerAccessTokenCreate(input: $input) {
-          customerUserErrors {
-            code
-            field
-            message
-          }
-          customerAccessToken {
-            accessToken
-            expiresAt
-          }
-        }
-      }
-    `;
+
     try {
       const result: CustomerAccessTokenCreateResult = (await shopify(
-        query,
+        cusomterAccessTokenCreateMutation,
         input,
       )) as CustomerAccessTokenCreateResult;
 

@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
+
 import shopify from "@/utils/shopify";
-import { gql } from "graphql-request";
 import ProductItem from "@/components/ProductItem";
 import { IProductItem, IProductItems } from "@/types/GlobalTypes";
+import { getAllProductsQuery } from "@/graphql/queries/allProducts";
 
 const CategoryItems = [
   {
@@ -20,82 +21,11 @@ const CategoryItems = [
   },
 ];
 
-const ProducItems = [
-  {
-    name: "Lolito 1",
-    price: "200.000.000",
-    discount: false,
-    dicountPercent: "10000",
-    disountedPrice: "100.000.000",
-    image: "/images/bedroom.jpeg",
-  },
-  {
-    name: "Lolito 2",
-    price: "200.000.000",
-    discount: false,
-    dicountPercent: "10000",
-    disountedPrice: "100.000.000",
-    image: "/images/bedroom.jpeg",
-  },
-  {
-    name: "Lolito 3",
-    price: "200.000.000",
-    discount: false,
-    dicountPercent: "10000",
-    disountedPrice: "100.000.000",
-    image: "/images/bedroom.jpeg",
-  },
-  {
-    name: "Lolito 4",
-    price: "200.000.000",
-    discount: false,
-    dicountPercent: "10000",
-    disountedPrice: "100.000.000",
-    image: "/images/bedroom.jpeg",
-  },
-  {
-    name: "Lolito 5",
-    price: "200.000.000",
-    discount: false,
-    dicountPercent: "10000",
-    disountedPrice: "100.000.000",
-    image: "/images/bedroom.jpeg",
-  },
-];
-
 const Home = async () => {
   const handleRequest = async () => {
     "use server";
-    const query = gql`
-      query getAllProducts {
-        products(first: 5) {
-          edges {
-            node {
-              id
-              title
-              priceRange {
-                maxVariantPrice {
-                  amount
-                  currencyCode
-                }
-              }
-              featuredImage {
-                id
-                url
-              }
-              images(first: 5) {
-                nodes {
-                  id
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-    `;
     const results: IProductItems = (await shopify(
-      query,
+      getAllProductsQuery,
       null,
     )) as IProductItems;
     return results;

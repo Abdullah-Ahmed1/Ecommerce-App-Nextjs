@@ -1,7 +1,7 @@
 import React from "react";
 import RegisterForm from "./form";
 import shopify from "@/utils/shopify";
-import { gql } from "graphql-request";
+import { customerCreateMutation } from "@/graphql/mutations/customerCreate";
 
 const Register = () => {
   const handleSubmit = async (data: any) => {
@@ -12,23 +12,9 @@ const Register = () => {
         password: data.password,
       },
     };
-    const query = gql`
-      mutation customerCreate($input: CustomerCreateInput!) {
-        customerCreate(input: $input) {
-          customerUserErrors {
-            code
-            field
-            message
-          }
-          customer {
-            id
-          }
-        }
-      }
-    `;
 
     try {
-      const result: any = await shopify(query, input);
+      const result: any = await shopify(customerCreateMutation, input);
       if (result?.customerCreate?.customerUserErrors.length == 0) {
         return {
           status: 200,

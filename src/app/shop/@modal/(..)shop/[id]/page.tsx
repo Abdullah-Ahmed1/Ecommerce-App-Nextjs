@@ -1,12 +1,15 @@
 "use client";
 import Image from "next/image";
-import { gql } from "graphql-request";
+import twColors from "tailwindcss/colors";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import twColors from "tailwindcss/colors";
 
 import shopify from "../../../../../utils/shopify";
 import Full from "../../../../../../public/svgs/full.svg";
+import { getCartQuery } from "@/graphql/queries/getCartQuery";
+import { addToCartMutation } from "@/graphql/mutations/addToCartMutation";
+import { createCartMutation } from "@/graphql/mutations/createCartMutation";
+import { getSingleProductQuery } from "@/graphql/queries/getSingleProduct";
 
 const sizeItems = ["L", "XL", "XS"];
 const colorItems = ["red", "blue", "purple"];
@@ -16,100 +19,7 @@ interface IParams {
     id: string;
   };
 }
-const createCartQuery = `
-mutation CART_CREATE{
-  cartCreate{
-    cart{
-      checkoutUrl
-      id
-    }
-  }
-}
-`;
 
-const addToCartQuery = `
-mutation AddToCart($cartId: ID!, $merchandiseId: ID!, $quantity: Int!) {
-  cartLinesAdd(cartId: $cartId, lines: [{ merchandiseId: $merchandiseId, quantity: $quantity }]) {
-    cart {
-      id
-      lines(first: 10) {
-        edges {
-          node {
-            id
-            quantity
-            merchandise {
-              ... on ProductVariant {
-                id
-                title
-                price {
-                  amount
-                  currencyCode
-                }
-              }
-            }
-          }
-        }
-      }
-      cost {
-        totalAmount {
-          amount
-          currencyCode
-        }
-        subtotalAmount {
-          amount
-          currencyCode
-        }
-        totalTaxAmount {
-          amount
-          currencyCode
-        }
-      }
-    }
-  }
-}
-`;
-
-const getCartQuery = `
-query getCart($cartId: ID!) {
-  cart(id: $cartId) {
-    id
-    createdAt
-    updatedAt
-    lines(first: 10) {
-      edges {
-        node {
-          id
-          quantity
-          merchandise {
-            ... on ProductVariant {
-              id
-              title
-              product {
-                title
-                handle
-              }
-            }
-          }
-        }
-      }
-    }
-    cost {
-      totalAmount {
-        amount
-        currencyCode
-      }
-      subtotalAmount {
-        amount
-        currencyCode
-      }
-      totalTaxAmount {
-        amount
-        currencyCode
-      }
-    }
-  }
-}
-`;
 const PhotoModal: React.FC<IParams> = ({ params }) => {
   const router = useRouter();
   const [product, setProduct] = useState<any>(null);
@@ -117,7 +27,6 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
 
   const handleAddToCart = async () => {
     const cart = localStorage.getItem("cart");
-    const cartData = cart && JSON.parse(cart);
 
     if (cart) {
       const variables = {
@@ -132,22 +41,19 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
         };
         try {
           const addToCartResponse = await shopify(
-            addToCartQuery,
+            addToCartMutation,
             addToCartVaraibles,
           );
           const getCartResponse = await shopify(getCartQuery, {
             cartId: addToCartResponse.cartLinesAdd.cart.id,
           });
           localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
-
-          console.debug("add to cart", addToCartResponse);
         } catch (err) {
           console.log(err);
         }
       } else {
         // here add cart again
-        const response = await shopify(createCartQuery, null);
-        console.debug("created cart data: ", response.cart);
+        const response = await shopify(createCartMutation, null);
         localStorage.setItem("cart", JSON.stringify(response.data.cartCreate));
         const addToCartVaraibles = {
           cartId: response.data.cartCreate.cart.id,
@@ -156,7 +62,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
         };
         try {
           const addToCartResponse = await shopify(
-            addToCartQuery,
+            addToCartMutation,
             addToCartVaraibles,
           );
 
@@ -170,7 +76,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
         }
       }
     } else {
-      const response = await shopify(createCartQuery, null);
+      const response = await shopify(createCartMutation, null);
 
       const addToCartVaraibles = {
         cartId: response.cartCreate.cart.id,
@@ -178,10 +84,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
         merchandiseId: product.variants.edges[0].node.id,
       };
       try {
-        const addToCartResponse = await shopify(
-          addToCartQuery,
-          addToCartVaraibles,
-        );
+        await shopify(addToCartMutation, addToCartVaraibles);
 
         const getCartResponse = await shopify(getCartQuery, {
           cartId: response.cartCreate.cart.id,
@@ -194,34 +97,13 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
   };
 
   const handleRequest = async () => {
-    const query = gql`
-    query getSingleProduct {
-      product(id: "gid://shopify/Product/${params.id}") {
-        id
-        title
-			  variants(first:20){
-          edges{
-            node{
-              id
-            }
-          }
-        }
-        featuredImage {
-          url
-          id
-        }
-        images(first: 5) {
-          edges {
-            node {
-              url
-              id
-            }
-          }
-        }
-      }
-    }`;
-
-    const results: any = (await shopify(query, null)) as any;
+    const variables = {
+      productId: `gid://shopify/Product/${params.id}`,
+    };
+    const results: any = (await shopify(
+      getSingleProductQuery,
+      variables,
+    )) as any;
     return results;
   };
 

@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { gql } from "graphql-request";
 
 import shopify from "@/utils/shopify";
 import Box from "../../../public/svgs/box.svg";
@@ -8,109 +7,13 @@ import Tune from "../../../public/svgs/tune.svg";
 import ProductItem from "@/components/ProductItem";
 import Dots from "../../../public/svgs/fourDots.svg";
 import { IProductItems, IProductItem } from "@/types/GlobalTypes";
+import { getAllProductsQuery } from "@/graphql/queries/allProducts";
 
-interface IData {
-  products: {
-    edges: {
-      node: {
-        id: string;
-        title: string;
-        priceRange: {
-          maxVariantPrice: {
-            amount: string;
-            currencyCode: string;
-          };
-        };
-        featuredImage: {
-          id: string;
-          url: string;
-        };
-        images: {
-          nodes: {
-            id: string;
-            url: string;
-          };
-        };
-      };
-    }[];
-  };
-}
-
-const ProducItems = [
-  {
-    name: "Lolito 1",
-    price: "200.000.000",
-    discount: false,
-    dicountPercent: "10000",
-    disountedPrice: "100.000.000",
-    image: "/images/bedroom.jpeg",
-  },
-  {
-    name: "Lolito 2",
-    price: "200.000.000",
-    discount: false,
-    dicountPercent: "10000",
-    disountedPrice: "100.000.000",
-    image: "/images/bedroom.jpeg",
-  },
-  {
-    name: "Lolito 3",
-    price: "200.000.000",
-    discount: false,
-    dicountPercent: "10000",
-    disountedPrice: "100.000.000",
-    image: "/images/bedroom.jpeg",
-  },
-  {
-    name: "Lolito 4",
-    price: "200.000.000",
-    discount: false,
-    dicountPercent: "10000",
-    disountedPrice: "100.000.000",
-    image: "/images/bedroom.jpeg",
-  },
-  {
-    name: "Lolito 5",
-    price: "200.000.000",
-    discount: false,
-    dicountPercent: "10000",
-    disountedPrice: "100.000.000",
-    image: "/images/bedroom.jpeg",
-  },
-];
 const Shop = async () => {
   const handleRequest = async () => {
     "use server";
-    const query = gql`
-      query getAllProducts {
-        products(first: 5) {
-          edges {
-            node {
-              id
-              title
-              priceRange {
-                maxVariantPrice {
-                  amount
-                  currencyCode
-                }
-              }
-              featuredImage {
-                id
-                url
-              }
-              images(first: 5) {
-                nodes {
-                  id
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-    `;
     const results: IProductItems = (await shopify(
-      query,
+      getAllProductsQuery,
       null,
     )) as IProductItems;
     return results;
