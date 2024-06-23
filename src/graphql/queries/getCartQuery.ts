@@ -16,6 +16,14 @@ query getCart($cartId: ID!) {
               product {
                 title
                 handle
+                images(first:12){
+                  edges{
+                    node{
+                      url
+                      id
+                    }
+                  }
+                }
               }
             }
           }

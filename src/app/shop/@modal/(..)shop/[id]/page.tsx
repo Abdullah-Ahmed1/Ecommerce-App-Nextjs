@@ -10,6 +10,7 @@ import { getCartQuery } from "@/graphql/queries/getCartQuery";
 import { addToCartMutation } from "@/graphql/mutations/addToCartMutation";
 import { createCartMutation } from "@/graphql/mutations/createCartMutation";
 import { getSingleProductQuery } from "@/graphql/queries/getSingleProduct";
+import { useCart } from "@/utils/contex-provider";
 
 const sizeItems = ["L", "XL", "XS"];
 const colorItems = ["red", "blue", "purple"];
@@ -21,6 +22,7 @@ interface IParams {
 }
 
 const PhotoModal: React.FC<IParams> = ({ params }) => {
+  const cartContext = useCart();
   const router = useRouter();
   const [product, setProduct] = useState<any>(null);
   const [currentFeatured, setCurrentFeatured] = useState<any>(null);
@@ -47,6 +49,9 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
           const getCartResponse = await shopify(getCartQuery, {
             cartId: addToCartResponse.cartLinesAdd.cart.id,
           });
+          cartContext.setCartItemsNumber(
+            getCartResponse.cart.lines.edges.length,
+          );
           localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
         } catch (err) {
           console.log(err);
@@ -70,6 +75,9 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
             cartId: addToCartResponse.data.cartLinesAddcart.id,
           });
 
+          cartContext.setCartItemsNumber(
+            getCartResponse.cart.lines.edges.length,
+          );
           localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
         } catch (err) {
           console.log(err);
