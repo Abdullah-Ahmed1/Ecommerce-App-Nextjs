@@ -6,9 +6,9 @@ import React, { useEffect, useState } from "react";
 
 import shopify from "../../../../../utils/shopify";
 import Full from "../../../../../../public/svgs/full.svg";
-import { getCartQuery } from "@/graphql/queries/getCartQuery";
-import { addToCartMutation } from "@/graphql/mutations/addToCartMutation";
-import { createCartMutation } from "@/graphql/mutations/createCartMutation";
+import { getCartQuery } from "@/graphql/queries/getCart";
+import { addToCartMutation } from "@/graphql/mutations/addToCart";
+import { createCartMutation } from "@/graphql/mutations/createCart";
 import { getSingleProductQuery } from "@/graphql/queries/getSingleProduct";
 import { useCart } from "@/utils/contex-provider";
 

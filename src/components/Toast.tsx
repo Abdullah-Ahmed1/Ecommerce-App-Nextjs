@@ -27,7 +27,7 @@ const Toast: React.FC<IToast> = ({
     return (
       <div
         id="toast-success"
-        className="fixed right-5 top-5 mb-4 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-white shadow dark:bg-darkCream dark:text-white"
+        className="fixed right-5 top-5 z-[100000000] mb-4 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-white shadow dark:bg-darkCream dark:text-white"
         role="alert"
       >
         {statusCode === 200 ? (
