@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { addToCart } from "@/utils/addToCart";
 import { useCart } from "@/utils/contex-provider";
 import shopify from "../../../../../utils/shopify";
+import Skeleton from "./skeleton";
 import Full from "../../../../../../public/svgs/full.svg";
 import { getSingleProductQuery } from "@/graphql/queries/getSingleProduct";
 
@@ -38,8 +39,10 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
 
   useEffect(() => {
     handleRequest().then((response) => {
-      setProduct(response.product);
-      setCurrentFeatured(response.product.images.edges[0].node);
+      setTimeout(() => {
+        setProduct(response.product);
+        setCurrentFeatured(response.product.images.edges[0].node);
+      }, 1000);
     });
   }, []);
 
@@ -68,7 +71,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
         >
           <Image src={Full} alt="open in full" />
         </button>
-        {product && currentFeatured && (
+        {product && currentFeatured ? (
           <div className="flex h-full w-full flex-row items-center gap-x-10">
             <div className="relative flex h-full w-full flex-row items-center justify-center rounded">
               <div className="flex flex-col gap-y-6">
@@ -201,6 +204,8 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
               </button>
             </div>
           </div>
+        ) : (
+          <Skeleton />
         )}
       </div>
     </div>
