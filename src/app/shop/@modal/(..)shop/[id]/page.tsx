@@ -69,7 +69,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
             window.location.reload();
           }}
         >
-          <Image src={Full} alt="open in full" />
+          {product && <Image src={Full} alt="open in full" />}
         </button>
         {product && currentFeatured ? (
           <div className="flex h-full w-full flex-row items-center gap-x-10">

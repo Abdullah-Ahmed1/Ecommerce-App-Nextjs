@@ -7,6 +7,7 @@ import Tune from "../../../public/svgs/tune.svg";
 import ProductItem from "@/components/ProductItem";
 import Dots from "../../../public/svgs/fourDots.svg";
 import { IProductItems, IProductItem } from "@/types/GlobalTypes";
+import ShopBanner from "../../../public/images/shopBanner.png";
 import { getAllProductsQuery } from "@/graphql/queries/allProducts";
 
 const Shop = async () => {
@@ -22,7 +23,8 @@ const Shop = async () => {
 
   return (
     <div>
-      <div className="relative h-80 w-full bg-red-500">
+      <div className="relative h-80 w-full ">
+        <Image src={ShopBanner} alt="Shop banner" />
         <div className="absolute left-0 top-0 flex h-80 w-full flex-col items-center justify-center gap-5">
           <p className="text-3xl font-bold">Shop</p>
           <p>{"Home > Shop"}</p>
