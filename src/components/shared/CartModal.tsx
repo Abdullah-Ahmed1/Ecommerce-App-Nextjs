@@ -9,6 +9,7 @@ import { useCart } from "@/utils/contex-provider";
 import Cross from "../../../public/svgs/close.svg";
 import { getCartQuery } from "@/graphql/queries/getCart";
 import { cartLinesRemoveMutation } from "@/graphql/mutations/cartLinesRemove";
+import Spinner from "./Spinner";
 
 const CartModal = () => {
   const router = useRouter();
@@ -17,6 +18,10 @@ const CartModal = () => {
   const [cartData, setCartData] = useState<any>(null);
   const [cartUpdated, setCartUpdated] = useState(true);
   const [checkoutUrl, setCheckoutUrl] = useState(null);
+  const [loading, setLoading] = useState<{
+    loading: boolean;
+    id: string | null;
+  }>({ loading: false, id: null });
 
   const variables = {
     cartId: (cart && JSON.parse(cart)?.id) || null,
@@ -38,6 +43,7 @@ const CartModal = () => {
   };
 
   const handleRemoveItemFromCart = async (id: string) => {
+    setLoading({ loading: true, id });
     const cartId = cart && JSON.parse(cart)?.id;
     const cartLinesRemoveVariables = {
       cartId,
@@ -45,6 +51,7 @@ const CartModal = () => {
     };
     await shopify(cartLinesRemoveMutation, cartLinesRemoveVariables);
     setCartUpdated(true);
+    setLoading({ loading: false, id: null });
   };
 
   const handleModalClick = (event: any) => {
@@ -92,19 +99,35 @@ const CartModal = () => {
                     </div>
                   </div>
                 </div>
-
-                <div
-                  onClick={() => handleRemoveItemFromCart(item.node.id)}
-                  className="flex h-[20px] w-[20px] items-center justify-center rounded-[50%] bg-gray-500 "
-                >
-                  <Image
-                    src={Cross}
-                    alt="cross"
-                    width={14}
-                    height={14}
-                    className="cursor-pointer invert filter"
-                  />
-                </div>
+                {!loading.loading && (
+                  <div
+                    onClick={() => handleRemoveItemFromCart(item.node.id)}
+                    className="flex h-[20px] w-[20px] items-center justify-center rounded-[50%] bg-gray-500 "
+                  >
+                    <Image
+                      src={Cross}
+                      alt="cross"
+                      width={14}
+                      height={14}
+                      className="cursor-pointer invert filter"
+                    />
+                  </div>
+                )}
+                {loading.loading && loading.id === item.node.id && <Spinner />}
+                {loading.loading && loading.id !== item.node.id && (
+                  <div
+                    onClick={() => handleRemoveItemFromCart(item.node.id)}
+                    className="flex h-[20px] w-[20px] items-center justify-center rounded-[50%] bg-gray-500 "
+                  >
+                    <Image
+                      src={Cross}
+                      alt="cross"
+                      width={14}
+                      height={14}
+                      className="cursor-pointer invert filter"
+                    />
+                  </div>
+                )}
               </div>
             ))
             // ) : (
