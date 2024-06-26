@@ -4,13 +4,11 @@ import twColors from "tailwindcss/colors";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+import { addToCart } from "@/utils/addToCart";
+import { useCart } from "@/utils/contex-provider";
 import shopify from "../../../../../utils/shopify";
 import Full from "../../../../../../public/svgs/full.svg";
-import { getCartQuery } from "@/graphql/queries/getCart";
-import { addToCartMutation } from "@/graphql/mutations/addToCart";
-import { createCartMutation } from "@/graphql/mutations/createCart";
 import { getSingleProductQuery } from "@/graphql/queries/getSingleProduct";
-import { useCart } from "@/utils/contex-provider";
 
 const sizeItems = ["L", "XL", "XS"];
 const colorItems = ["red", "blue", "purple"];
@@ -26,83 +24,6 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
   const router = useRouter();
   const [product, setProduct] = useState<any>(null);
   const [currentFeatured, setCurrentFeatured] = useState<any>(null);
-
-  const handleAddToCart = async () => {
-    const cart = localStorage.getItem("cart");
-
-    if (cart) {
-      const variables = {
-        cartId: JSON.parse(cart)?.id,
-      };
-      const responseGetCart = await shopify(getCartQuery, variables);
-      if (responseGetCart.cart) {
-        const addToCartVaraibles = {
-          cartId: responseGetCart.cart.id,
-          quantity: 1,
-          merchandiseId: product.variants.edges[0].node.id,
-        };
-        try {
-          const addToCartResponse = await shopify(
-            addToCartMutation,
-            addToCartVaraibles,
-          );
-          const getCartResponse = await shopify(getCartQuery, {
-            cartId: addToCartResponse.cartLinesAdd.cart.id,
-          });
-          cartContext.setCartItemsNumber(
-            getCartResponse.cart.lines.edges.length,
-          );
-          localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
-        } catch (err) {
-          console.log(err);
-        }
-      } else {
-        // here add cart again
-        const response = await shopify(createCartMutation, null);
-        localStorage.setItem("cart", JSON.stringify(response.data.cartCreate));
-        const addToCartVaraibles = {
-          cartId: response.data.cartCreate.cart.id,
-          quantity: 1,
-          merchandiseId: product.variants.edges[0].node.id,
-        };
-        try {
-          const addToCartResponse = await shopify(
-            addToCartMutation,
-            addToCartVaraibles,
-          );
-
-          const getCartResponse = await shopify(getCartQuery, {
-            cartId: addToCartResponse.data.cartLinesAddcart.id,
-          });
-
-          cartContext.setCartItemsNumber(
-            getCartResponse.cart.lines.edges.length,
-          );
-          localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    } else {
-      const response = await shopify(createCartMutation, null);
-
-      const addToCartVaraibles = {
-        cartId: response.cartCreate.cart.id,
-        quantity: 1,
-        merchandiseId: product.variants.edges[0].node.id,
-      };
-      try {
-        await shopify(addToCartMutation, addToCartVaraibles);
-
-        const getCartResponse = await shopify(getCartQuery, {
-          cartId: response.cartCreate.cart.id,
-        });
-        localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
 
   const handleRequest = async () => {
     const variables = {
@@ -273,7 +194,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
                 </div>
               </div>
               <button
-                onClick={handleAddToCart}
+                onClick={() => addToCart({ product, cartContext })}
                 className="mt-4 cursor-pointer rounded border-[1px] border-gray-400 p-2"
               >
                 Add to Cart

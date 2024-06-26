@@ -1,9 +1,9 @@
 import React from "react";
-import Image from "next/image";
 import shopify from "@/utils/shopify";
-import { gql } from "graphql-request";
 import twColors from "tailwindcss/colors";
+import ButtonSection from "./buttonSection";
 import ImageComponent from "./ImageComponent";
+import { getSingleProductQuery } from "@/graphql/queries/getSingleProduct";
 
 interface IParams {
   params: {
@@ -11,7 +11,6 @@ interface IParams {
   };
 }
 
-const sizeItems = ["L", "XL", "XS"];
 const colorItems = ["red", "blue", "purple"];
 const productInfo = {
   SKU: "SS001",
@@ -22,28 +21,9 @@ const productInfo = {
 const SingleProduct: React.FC<IParams> = async ({ params }) => {
   const handleRequest = async () => {
     "use server";
-    const query = gql`
-    query getSingleProduct {
-      product(id: "gid://shopify/Product/${params.id}") {
-        id
-        title
-
-        featuredImage {
-          url
-          id
-        }
-        images(first: 5) {
-          edges {
-            node {
-              url
-              id
-            }
-          }
-        }
-      }
-    }`;
-
-    const results: any = (await shopify(query, null)) as any;
+    const results: any = (await shopify(getSingleProductQuery, {
+      productId: `gid://shopify/Product/${params.id}`,
+    })) as any;
     return results;
   };
   const data: any = (await handleRequest()) as any;
@@ -142,19 +122,7 @@ const SingleProduct: React.FC<IParams> = async ({ params }) => {
                     );
                   })}
                 </div>
-                <div className="mt-5 flex flex-row gap-x-5">
-                  <div className="flex flex-row items-center gap-x-5 rounded-md border border-black p-2">
-                    <button>-</button>
-                    <p>1</p>
-                    <button>+</button>
-                  </div>
-                  <button className="rounded-xl border border-black px-5 py-4">
-                    Add to Cart
-                  </button>
-                  <button className="rounded-xl border border-black px-5 py-4">
-                    + Compare
-                  </button>
-                </div>
+                <ButtonSection data={data} />
                 <div className="mt-10 h-px w-full bg-gray-300"></div>
                 <div className="mt-10">
                   <ul className="flex flex-col gap-y-3">
