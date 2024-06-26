@@ -13,9 +13,10 @@ import { cartLinesRemoveMutation } from "@/graphql/mutations/cartLinesRemove";
 const CartModal = () => {
   const router = useRouter();
   const cartContext = useCart();
+  const cart = localStorage.getItem("cart");
   const [cartData, setCartData] = useState<any>(null);
   const [cartUpdated, setCartUpdated] = useState(true);
-  const cart = localStorage.getItem("cart");
+  const [checkoutUrl, setCheckoutUrl] = useState(null);
 
   const variables = {
     cartId: (cart && JSON.parse(cart)?.id) || null,
@@ -24,6 +25,7 @@ const CartModal = () => {
   useEffect(() => {
     if (!cartUpdated) return;
     shopify(getCartQuery, variables).then((response) => {
+      setCheckoutUrl(response.cart.checkoutUrl);
       setCartData(response.cart);
       localStorage.setItem("cart", JSON.stringify(response.cart));
       cartContext.setCartItemsNumber(response.cart.lines.edges.length);
@@ -67,11 +69,14 @@ const CartModal = () => {
             className="cursor-pointer"
           />
         </div>
-        <div className="mt-4 flex h-full flex-col justify-between  pb-4">
-          <div className="flex flex-col gap-y-[10px]">
+        <div className="mt-4 flex h-full flex-col pb-4">
+          <div className="flex flex-1 flex-col gap-y-[10px]">
             {// cartData ? (
-            cartData?.lines.edges.map((item: any) => (
-              <div className="flex  flex-row items-center justify-between">
+            cartData?.lines.edges.map((item: any, index: number) => (
+              <div
+                key={index}
+                className="flex  flex-row items-center justify-between"
+              >
                 <div className="flex w-full flex-row items-center gap-x-8 ">
                   <Image
                     src={item.node.merchandise.product.images.edges[0].node.url}
@@ -107,9 +112,28 @@ const CartModal = () => {
             // )
             }
           </div>
-          <section className="flex w-1/2 flex-row justify-between">
-            <p>Subtotal</p>
-            <p>25000</p>
+          <section className="flex flex-col items-center">
+            <div className="mx-[20px] flex w-full justify-between">
+              <p>Subtotal</p>
+              <p>25000</p>
+            </div>
+            <div className="my-[20px] h-[1px] w-full bg-gray-400"></div>
+            <div className="flex items-center justify-center">
+              {checkoutUrl && (
+                <button
+                  onClick={() => {
+                    checkoutUrl &&
+                      window.open(
+                        "https://ecommerce-store10001.myshopify.com/checkouts/cn/Z2NwLWFzaWEtc291dGhlYXN0MTowMUoxMkIyMjBFTVMwVkszNzBHU1dWSzRYUg",
+                        "_blank",
+                      );
+                  }}
+                  className="rounded border-[2px] border-gray-400 px-[100px] py-[5px]"
+                >
+                  Checkout
+                </button>
+              )}
+            </div>
           </section>
         </div>
       </div>

@@ -12,6 +12,7 @@ const shopify = async (query: any, variables: any) => {
   headers.set("X-Shopify-Storefront-Access-Token", token);
 
   const response = await fetch(domain, {
+    next: { revalidate: 3600 },
     method: "POST",
     headers: headers,
     body: JSON.stringify({

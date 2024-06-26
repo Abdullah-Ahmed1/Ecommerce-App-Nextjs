@@ -3,6 +3,7 @@ query getCart($cartId: ID!) {
   cart(id: $cartId) {
     id
     createdAt
+    checkoutUrl
     updatedAt
     lines(first: 10) {
       edges {
