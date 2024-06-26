@@ -4,12 +4,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+import Spinner from "./Spinner";
 import shopify from "@/utils/shopify";
 import { useCart } from "@/utils/contex-provider";
 import Cross from "../../../public/svgs/close.svg";
 import { getCartQuery } from "@/graphql/queries/getCart";
 import { cartLinesRemoveMutation } from "@/graphql/mutations/cartLinesRemove";
-import Spinner from "./Spinner";
+import CartModalSkeleton from "./CartModalSkeleton";
 
 const CartModal = () => {
   const router = useRouter();
@@ -78,62 +79,63 @@ const CartModal = () => {
         </div>
         <div className="mt-4 flex h-full flex-col pb-4">
           <div className="flex flex-1 flex-col gap-y-[10px]">
-            {// cartData ? (
-            cartData?.lines.edges.map((item: any, index: number) => (
-              <div
-                key={index}
-                className="flex  flex-row items-center justify-between"
-              >
-                <div className="flex w-full flex-row items-center gap-x-8 ">
-                  <Image
-                    src={item.node.merchandise.product.images.edges[0].node.url}
-                    alt="image"
-                    width={50}
-                    height={50}
-                  />
-                  <div className="flex flex-col">
-                    <p>{item.node.merchandise.product.title}</p>
-                    <div className="flex flex-row">
-                      <p>1 x</p>
-                      <p>{item.Price} + Rs</p>
+            {cartData
+              ? cartData?.lines.edges.map((item: any, index: number) => (
+                  <div
+                    key={index}
+                    className="flex  flex-row items-center justify-between"
+                  >
+                    <div className="flex w-full flex-row items-center gap-x-8 ">
+                      <Image
+                        src={
+                          item.node.merchandise.product.images.edges[0].node.url
+                        }
+                        alt="image"
+                        width={50}
+                        height={50}
+                      />
+                      <div className="flex flex-col">
+                        <p>{item.node.merchandise.product.title}</p>
+                        <div className="flex flex-row">
+                          <p>1 x</p>
+                          <p>{item.Price} + Rs</p>
+                        </div>
+                      </div>
                     </div>
+                    {!loading.loading && (
+                      <div
+                        onClick={() => handleRemoveItemFromCart(item.node.id)}
+                        className="flex h-[20px] w-[20px] items-center justify-center rounded-[50%] bg-gray-500 "
+                      >
+                        <Image
+                          src={Cross}
+                          alt="cross"
+                          width={14}
+                          height={14}
+                          className="cursor-pointer invert filter"
+                        />
+                      </div>
+                    )}
+                    {loading.loading && loading.id === item.node.id && (
+                      <Spinner />
+                    )}
+                    {loading.loading && loading.id !== item.node.id && (
+                      <div
+                        onClick={() => handleRemoveItemFromCart(item.node.id)}
+                        className="flex h-[20px] w-[20px] items-center justify-center rounded-[50%] bg-gray-500 "
+                      >
+                        <Image
+                          src={Cross}
+                          alt="cross"
+                          width={14}
+                          height={14}
+                          className="cursor-pointer invert filter"
+                        />
+                      </div>
+                    )}
                   </div>
-                </div>
-                {!loading.loading && (
-                  <div
-                    onClick={() => handleRemoveItemFromCart(item.node.id)}
-                    className="flex h-[20px] w-[20px] items-center justify-center rounded-[50%] bg-gray-500 "
-                  >
-                    <Image
-                      src={Cross}
-                      alt="cross"
-                      width={14}
-                      height={14}
-                      className="cursor-pointer invert filter"
-                    />
-                  </div>
-                )}
-                {loading.loading && loading.id === item.node.id && <Spinner />}
-                {loading.loading && loading.id !== item.node.id && (
-                  <div
-                    onClick={() => handleRemoveItemFromCart(item.node.id)}
-                    className="flex h-[20px] w-[20px] items-center justify-center rounded-[50%] bg-gray-500 "
-                  >
-                    <Image
-                      src={Cross}
-                      alt="cross"
-                      width={14}
-                      height={14}
-                      className="cursor-pointer invert filter"
-                    />
-                  </div>
-                )}
-              </div>
-            ))
-            // ) : (
-            // <h2>nothing to show</h2>
-            // )
-            }
+                ))
+              : Array.from({ length: 2 }).map(() => <CartModalSkeleton />)}
           </div>
           <section className="flex flex-col items-center">
             <div className="mx-[20px] flex w-full justify-between">
