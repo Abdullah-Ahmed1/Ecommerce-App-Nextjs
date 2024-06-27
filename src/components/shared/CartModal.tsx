@@ -8,9 +8,9 @@ import Spinner from "./Spinner";
 import shopify from "@/utils/shopify";
 import { useCart } from "@/utils/contex-provider";
 import Cross from "../../../public/svgs/close.svg";
+import CartModalSkeleton from "./CartModalSkeleton";
 import { getCartQuery } from "@/graphql/queries/getCart";
 import { cartLinesRemoveMutation } from "@/graphql/mutations/cartLinesRemove";
-import CartModalSkeleton from "./CartModalSkeleton";
 
 const CartModal = () => {
   const router = useRouter();
@@ -82,8 +82,9 @@ const CartModal = () => {
         </div>
         <div className="mt-4 flex h-full flex-col pb-4">
           <div className="flex flex-1 flex-col gap-y-[10px]">
-            {cartData
-              ? cartData?.lines.edges.map((item: any, index: number) => (
+            {cartData ? (
+              cartData?.lines.edges.length > 0 ? (
+                cartData?.lines.edges.map((item: any, index: number) => (
                   <div
                     key={index}
                     className="flex  flex-row items-center justify-between"
@@ -138,13 +139,23 @@ const CartModal = () => {
                     )}
                   </div>
                 ))
-              : Array.from({ length: 2 }).map(() => <CartModalSkeleton />)}
+              ) : (
+                <div className="flex h-full w-full items-center justify-center">
+                  <h1>Cart is currently empty!!</h1>
+                </div>
+              )
+            ) : (
+              Array.from({ length: 2 }).map(() => <CartModalSkeleton />)
+            )}
           </div>
           <section className="flex flex-col items-center">
-            <div className="mx-[20px] flex w-full justify-between">
-              <p>Subtotal</p>
-              <p>25000</p>
-            </div>
+            {cartData?.lines.edges.length >= 1 && (
+              <div className="mx-[20px] flex w-full justify-between">
+                <p>Subtotal</p>
+                <p>25000</p>
+              </div>
+            )}
+
             <div className="my-[20px] h-[1px] w-full bg-gray-400"></div>
             <div className="flex items-center justify-center">
               {checkoutUrl && cartData && (
