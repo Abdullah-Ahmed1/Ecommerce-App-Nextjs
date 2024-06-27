@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import Heart from "../../public/heart.svg";
@@ -14,8 +14,8 @@ import MobileViewHeaderDropdown from "./MobileViewHeaderDropdown";
 
 const Header = () => {
   const router = useRouter();
+  const navbarRef = useRef<HTMLDivElement | null>(null);
   const cartContext = useCart();
-  console.debug("@@", cartContext.cartItemsNumber);
   const [showDropdown, setShowDropdown] = useState(false);
   const [cartItems, setCartItems] = useState(null);
 
@@ -101,8 +101,30 @@ const Header = () => {
     },
   ];
 
+  var prevScrollpos = window.scrollY;
+  const onScroll = () => {
+    if (!navbarRef.current) return;
+    var currentScrollPos = window.scrollY;
+    if (prevScrollpos >= currentScrollPos) {
+      navbarRef.current.style.top = "0";
+    } else {
+      navbarRef.current.style.top = "-90px";
+    }
+    prevScrollpos = currentScrollPos;
+  };
+
+  useEffect(() => {
+    window.addEventListener("wheel", onScroll);
+    return () => {
+      window.removeEventListener("wheel", onScroll);
+    };
+  }, []);
+
   return (
-    <div className="fixed top-0 z-[500]  w-full bg-white">
+    <div
+      ref={navbarRef}
+      className="fixed  top-0 z-[500]  w-full bg-red-300 transition-all"
+    >
       {showDropdown && (
         <MobileViewHeaderDropdown
           IconItems={IconItems}

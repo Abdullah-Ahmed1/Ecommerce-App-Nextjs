@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <CartDataProvider>
         <body className={`${inter.className}`}>
-          <main className="flex h-full w-full flex-col overflow-auto">
+          <main className="flex w-full flex-col overflow-auto">
             <GoogleTagManager gtmId="GTM-TJG8XG78" />
             {/* <Header /> */}
             <HeaderNew />
