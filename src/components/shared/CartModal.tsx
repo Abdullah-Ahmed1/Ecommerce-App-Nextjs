@@ -54,7 +54,10 @@ const CartModal = () => {
     setCartUpdated(true);
     setLoading({ loading: false, id: null });
   };
-
+  // useEffect(() => {
+  //   if (!cartData) return;
+  //   alert(cartData.lines.edges.length < 0);
+  // }, [cartData]);
   const handleModalClick = (event: any) => {
     event.stopPropagation();
   };
@@ -144,8 +147,9 @@ const CartModal = () => {
             </div>
             <div className="my-[20px] h-[1px] w-full bg-gray-400"></div>
             <div className="flex items-center justify-center">
-              {checkoutUrl && (
+              {checkoutUrl && cartData && (
                 <button
+                  disabled={cartData.lines.edges.length < 1}
                   onClick={() => {
                     checkoutUrl &&
                       window.open(
@@ -153,7 +157,7 @@ const CartModal = () => {
                         "_blank",
                       );
                   }}
-                  className="rounded border-[2px] border-gray-400 px-[100px] py-[5px]"
+                  className="rounded border-[2px] border-gray-400 px-[100px] py-[5px] disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300"
                 >
                   Checkout
                 </button>
