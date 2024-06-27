@@ -50,7 +50,7 @@ const ProductItem = ({ item }: any) => {
           </div>
         </div>
         <div className="absolute top-0 flex h-full w-full flex-col items-center justify-center bg-stone-500 bg-opacity-60 opacity-0 transition duration-300 hover:opacity-100">
-          <AddToCartButton ref={AddToCartRef} />
+          <AddToCartButton ref={AddToCartRef} product={item.node} />
           <div className="mt-5 flex flex-row gap-4">
             <div className="flex flex-row items-center justify-center gap-1">
               <Image

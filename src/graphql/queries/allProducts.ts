@@ -7,6 +7,13 @@ export const getAllProductsQuery = gql`
         node {
           id
           title
+          variants(first: 5) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
           priceRange {
             maxVariantPrice {
               amount

@@ -1,22 +1,32 @@
 "use client";
-import React, { FC, ForwardedRef, forwardRef } from "react";
+import React, { FC, ForwardedRef, forwardRef, useState } from "react";
 import { sendGTMEvent } from "@next/third-parties/google";
+import Spinner from "./shared/Spinner";
+import { useCart } from "@/utils/contex-provider";
+import { addToCart } from "@/utils/addToCart";
 
-const AddToCartButton = forwardRef((props, ref: any) => {
+const AddToCartButton = forwardRef(({ product }: any, ref: any) => {
+  const cartContext = useCart();
+  const [Loading, setLoading] = useState(false);
   return (
     <button
       ref={ref}
       id="test1"
-      onClick={(event) => {
+      onClick={async (event) => {
         sendGTMEvent({
           event: "buttonClickedyes",
           id: "test",
         });
+        setLoading(true);
+        await addToCart({ cartContext, product });
+        setLoading(false);
+
         event.stopPropagation();
       }}
-      className="bg-white px-10 py-2 text-darkCream"
+      className="flex h-[40px] w-[80%]  items-center justify-center bg-white px-10 py-2 text-darkCream"
     >
-      Add to cart
+      {!Loading && "Add to cart"}
+      {Loading && <Spinner />}
     </button>
   );
 });

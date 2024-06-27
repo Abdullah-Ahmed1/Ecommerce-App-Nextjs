@@ -4,12 +4,13 @@ import twColors from "tailwindcss/colors";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+import Skeleton from "./skeleton";
 import { addToCart } from "@/utils/addToCart";
 import { useCart } from "@/utils/contex-provider";
 import shopify from "../../../../../utils/shopify";
-import Skeleton from "./skeleton";
 import Full from "../../../../../../public/svgs/full.svg";
 import { getSingleProductQuery } from "@/graphql/queries/getSingleProduct";
+import Spinner from "@/components/shared/Spinner";
 
 const sizeItems = ["L", "XL", "XS"];
 const colorItems = ["red", "blue", "purple"];
@@ -25,6 +26,7 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
   const router = useRouter();
   const [product, setProduct] = useState<any>(null);
   const [currentFeatured, setCurrentFeatured] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleRequest = async () => {
     const variables = {
@@ -35,6 +37,18 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
       variables,
     )) as any;
     return results;
+  };
+
+  const handleAddToCart = async ({
+    product,
+    cartContext,
+  }: {
+    product: any;
+    cartContext: any;
+  }) => {
+    setLoading(true);
+    await addToCart({ product, cartContext });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -197,9 +211,10 @@ const PhotoModal: React.FC<IParams> = ({ params }) => {
                 </div>
               </div>
               <button
-                onClick={() => addToCart({ product, cartContext })}
-                className="mt-4 cursor-pointer rounded border-[1px] border-gray-400 p-2"
+                onClick={() => handleAddToCart({ product, cartContext })}
+                className="mt-4 flex cursor-pointer items-center justify-between gap-4 rounded border-[1px] border-gray-400 p-2"
               >
+                {loading && <Spinner />}
                 Add to Cart
               </button>
             </div>

@@ -79,7 +79,7 @@ const Home = async () => {
                     quality={100}
                     alt={item.name}
                     src={item.image}
-                    className="rounded-md"
+                    className="rounded-md hover:scale-[900px] hover:transform"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
