@@ -36,7 +36,6 @@ const LoginPage = () => {
         input,
       )) as CustomerAccessTokenCreateResult;
 
-      console.debug("login", result.customerAccessTokenCreate);
       if (result.customerAccessTokenCreate.customerUserErrors.length > 0) {
         return {
           status: 500,

@@ -17,10 +17,6 @@ export const CartDataProvider = ({
     (cartData && JSON.parse(cartData).lines.edges.length) ?? defaultItemsNumber,
   );
 
-  useEffect(() => {
-    console.debug("##", cartItemsNumber);
-  }, [cartItemsNumber]);
-
   return (
     <CartContext.Provider value={{ cartItemsNumber, setCartItemsNumber }}>
       {children}

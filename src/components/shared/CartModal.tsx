@@ -54,10 +54,6 @@ const CartModal = () => {
     setCartUpdated(true);
     setLoading({ loading: false, id: null });
   };
-  // useEffect(() => {
-  //   if (!cartData) return;
-  //   alert(cartData.lines.edges.length < 0);
-  // }, [cartData]);
   const handleModalClick = (event: any) => {
     event.stopPropagation();
   };
