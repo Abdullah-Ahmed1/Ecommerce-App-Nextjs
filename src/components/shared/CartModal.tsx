@@ -15,7 +15,6 @@ import { cartLinesRemoveMutation } from "@/graphql/mutations/cartLinesRemove";
 const CartModal = () => {
   const router = useRouter();
   const cartContext = useCart();
-  const cart = localStorage.getItem("cart");
   const [cartData, setCartData] = useState<any>(null);
   const [cartUpdated, setCartUpdated] = useState(true);
   const [checkoutUrl, setCheckoutUrl] = useState(null);
@@ -24,12 +23,12 @@ const CartModal = () => {
     id: string | null;
   }>({ loading: false, id: null });
 
-  const variables = {
-    cartId: (cart && JSON.parse(cart)?.id) || null,
-  };
-
   useEffect(() => {
     if (!cartUpdated) return;
+    const cart = localStorage.getItem("cart");
+    const variables = {
+      cartId: (cart && JSON.parse(cart)?.id) || null,
+    };
     shopify(getCartQuery, variables).then((response) => {
       setCheckoutUrl(response.cart.checkoutUrl);
       setCartData(response.cart);
@@ -45,7 +44,7 @@ const CartModal = () => {
 
   const handleRemoveItemFromCart = async (id: string) => {
     setLoading({ loading: true, id });
-    const cartId = cart && JSON.parse(cart)?.id;
+    const cartId = cartData && cartData.id;
     const cartLinesRemoveVariables = {
       cartId,
       lineIds: id,

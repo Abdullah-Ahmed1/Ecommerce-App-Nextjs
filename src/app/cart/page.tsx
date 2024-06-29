@@ -2,26 +2,26 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
+import Skeleton from "./skeleton";
 import shopify from "@/utils/shopify";
 import Search from "../../public/search.svg";
 import Delete from "../../../public/delete.svg";
 import { useCart } from "@/utils/contex-provider";
 import Spinner from "@/components/shared/Spinner";
 import { getCartQuery } from "@/graphql/queries/getCart";
-import Skeleton from "./skeleton";
 
 const Cart = () => {
   const cartContext = useCart();
-  const cart = localStorage.getItem("cart");
   const [cartData, setCartData] = useState<any>(null);
   const [checkoutUrl, setCheckoutUrl] = useState(false);
   const [cartUpdated, setCartUpdated] = useState(true);
-  const variables = {
-    cartId: (cart && JSON.parse(cart)?.id) || null,
-  };
 
   useEffect(() => {
     if (!cartUpdated) return;
+    const cart = localStorage.getItem("cart");
+    const variables = {
+      cartId: (cart && JSON.parse(cart)?.id) || null,
+    };
     shopify(getCartQuery, variables).then((response) => {
       setCheckoutUrl(response.cart.checkoutUrl);
       setCartData(response.cart);

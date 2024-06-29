@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import React, { useState, useRef, useEffect } from "react";
 
 import Heart from "../../public/heart.svg";
 import Search from "../../public/search.svg";
@@ -14,10 +14,14 @@ import MobileViewHeaderDropdown from "./MobileViewHeaderDropdown";
 
 const Header = () => {
   const router = useRouter();
-  const navbarRef = useRef<HTMLDivElement | null>(null);
   const cartContext = useCart();
+  const [cartItems, setCartItems] = useState(cartContext.cartItemsNumber);
+  const navbarRef = useRef<HTMLDivElement | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [cartItems, setCartItems] = useState(null);
+
+  useEffect(() => {
+    setCartItems(cartContext.cartItemsNumber);
+  }, [cartContext.cartItemsNumber]);
 
   const MenuItems = [
     {
@@ -55,7 +59,7 @@ const Header = () => {
           />
           {
             <div className="absolute right-[-5px] top-0 flex h-[15px] w-[15px] items-center justify-center rounded-[50%] bg-red-600 p-2 text-[10px] text-white">
-              {cartContext.cartItemsNumber}
+              {cartItems}
             </div>
           }
         </button>
@@ -101,23 +105,27 @@ const Header = () => {
     },
   ];
 
-  var prevScrollpos = window.scrollY;
-  const onScroll = () => {
-    if (!navbarRef.current) return;
-    var currentScrollPos = window.scrollY;
-    if (prevScrollpos >= currentScrollPos) {
-      navbarRef.current.style.top = "0";
-    } else {
-      navbarRef.current.style.top = "-90px";
-    }
-    prevScrollpos = currentScrollPos;
-  };
-
   useEffect(() => {
+    var prevScrollpos = window.scrollY;
+    const onScroll = () => {
+      if (!navbarRef.current) return;
+      var currentScrollPos = window.scrollY;
+      if (prevScrollpos >= currentScrollPos) {
+        navbarRef.current.style.top = "0";
+      } else {
+        navbarRef.current.style.top = "-90px";
+      }
+      prevScrollpos = currentScrollPos;
+    };
     window.addEventListener("wheel", onScroll);
     return () => {
       window.removeEventListener("wheel", onScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    const cart = localStorage.getItem("cart");
+    setCartItems(cart && JSON.parse(cart).lines.edges.length);
   }, []);
 
   return (
