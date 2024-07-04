@@ -59,7 +59,7 @@ const Header = () => {
           />
           {
             <div className="absolute right-[-5px] top-0 flex h-[15px] w-[15px] items-center justify-center rounded-[50%] bg-red-600 p-2 text-[10px] text-white">
-              {cartItems}
+              {cartItems ?? 0}
             </div>
           }
         </button>

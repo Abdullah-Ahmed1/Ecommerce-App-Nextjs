@@ -75,6 +75,7 @@ export const addToCart = async ({
       const getCartResponse = await shopify(getCartQuery, {
         cartId: response.cartCreate.cart.id,
       });
+      cartContext.setCartItemsNumber(getCartResponse.cart.lines.edges.length);
       localStorage.setItem("cart", JSON.stringify(getCartResponse.cart));
     } catch (err) {
       console.log(err);
